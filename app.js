@@ -14,7 +14,7 @@ app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieSession({
-  secret: 'cre4tivityha$no8ord3er',
+  secret: config.sessionSecret
   secure: false,
   httpOnly: true,
   maxAge: 7*24*60*60*1000
