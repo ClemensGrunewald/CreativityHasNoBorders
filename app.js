@@ -1,0 +1,45 @@
+var config          = require('./config');
+var bodyParser      = require('body-parser');
+var pug             = require('pug');
+var cookieSession   = require('cookie-session');
+const express       = require('express');
+const app           = express();
+
+
+//- Set up middleware
+app.set('view engine', 'pug');
+app.set('view options', { pretty: true });
+app.locals.pretty = true;
+app.use(express.static(__dirname + '/public'));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(cookieSession({
+  secret: 'cre4tivityha$no8ord3er',
+  secure: false,
+  httpOnly: true,
+  maxAge: 7*24*60*60*1000
+}))
+
+
+//- Require Routes
+var routes = {};
+routes.index    = require('./routes/index.js');
+routes.user     = require('./routes/user.js');
+routes.admin    = require('./routes/admin.js');
+routes.auth     = require('./routes/auth.js');
+
+
+//- Define Routes
+app.use('/', routes.index);
+app.use('/u/', routes.user);
+app.use('/admin/', routes.admin);
+app.use('/auth/', routes.auth);
+
+
+//- Start Server
+app.listen(config.port, function(err) {
+  if (err) {
+    return console.log('something bad happened', err)
+  }
+  console.log('server is listening on '+config.port)
+})

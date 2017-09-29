@@ -1,0 +1,182 @@
+/*- General Style -*/
+/*
+
+
+//- Main Colors
+red 255|76|50 rgb(255,76,50)
+dark blue 0|84|104 rgba(0,84,104,1)
+
+//- Additional Colors
+pink 243|55|165 rgba(243,55,165);
+light green 159|200|28
+light blue 158|240|225
+
+
+font-family: 'Josefin Sans', sans-serif; // headlines
+font-family: 'Roboto Condensed', sans-serif; // bold subhead, regular copy
+
+
+padding from sides:
+
+*/
+::-webkit-scrollbar {
+    display: none;
+}
+
+
+* {
+  margin:0;
+  padding:0;
+}
+
+body {
+  position:relative;
+  padding-top:57px;
+
+  background: white;
+  font-family: 'Roboto Condensed', sans-serif;
+  font-weight:normal;
+  color:black;
+}
+
+h1 {
+  font-family: 'Josefin Sans', sans-serif;
+  font-weight:bold;
+  color: rgba(0,84,104,1);
+}
+
+p {
+  font-size: 18px;
+  color: rgba(0,84,104,1);
+  letter-spacing:1.2px;
+  line-height:26px;
+}
+
+a, a:hover {
+  text-decoration: none;
+  color:black;
+}
+
+
+
+/*- Navigationbar  -*/
+.navbar {
+  padding:0 15px;
+  margin:0;
+}
+
+nav {
+  height:60px;
+  background:rgba(0,84,104,1);
+  border-bottom:1px solid rgba(0,0,0,0.05);
+}
+
+nav .menu-text {
+  position:absolute;
+  right:65px;
+  color:white;
+  font-weight:200;
+  font-size:14px;
+  line-height:60px;
+}
+
+nav .burgermenu-icon {
+  color:rgba(255,255,255,1);
+  font-size:28px;
+  line-height:60px;
+  transform: scale(1.5,1);
+  margin-right:10px;
+}
+
+nav .burgermenu:hover {
+  cursor:pointer;
+}
+
+
+/*- Interactive Menu  -*/
+
+
+
+
+
+/*- Footer  -*/
+footer {
+  position:relative;
+  width:100%;
+  height:auto;
+  margin-top:0px;
+  padding: 70px 10% 5px 10%;
+  background:rgba(158,240,225,1);
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: 15px;
+  color:rgba(0,84,104,1);
+  letter-spacing: 0.9px;
+}
+
+footer a {
+  color:rgba(0,84,104,1);
+}
+
+footer a:hover {
+  color:rgba(0,84,104,1);
+}
+
+footer .footer-logo img{
+  position:relative;
+  display:block;
+  margin:0 auto;
+  margin-bottom:35px;
+  height:70px;
+  width:auto;
+}
+
+footer p {
+  padding:0;
+  margin:0 0 15px 0;
+}
+
+footer .copyright {
+  padding:0;
+  margin:90px auto 5px auto;
+  font-size:8px;
+}
+
+
+
+/*- HELPERFUNCTIONS -*/
+.centered {
+  text-align: center;
+}
+
+.main_button_white {
+  position:relative;
+  display:inline-block;
+  min-width:250px;
+  border:2px solid white;
+  color: white;
+  margin-top:10px;
+  margin-bottom:10px;
+  padding:15px 45px;
+}
+
+.main_button_white:hover {
+  color:black;
+  background:white;
+}
+
+
+.main_button_black {
+  position:relative;
+  display:inline-block;
+  min-width:250px;
+  border:2px solid black;
+  color: black;
+  margin-top:10px;
+  margin-bottom:10px;
+  padding:15px 45px;
+}
+
+.main_button_black:hover {
+  color:white;
+  background:black;
+}

@@ -1,0 +1,312 @@
+
+
+
+/*- Logo Module -*/
+#logo_module {
+  position:relative;
+  padding-bottom:50px;
+  background:rgba(158,240,225,1);
+}
+
+.logo_80percent {
+  position:relative;
+  display:block;
+  width:80%;
+  max-width:800px;
+  height:auto;
+  margin:25px auto 20px auto;
+}
+
+/*- Project Module -*/
+#the_project_module {
+  position:relative;
+  min-height:500px;
+  padding:0 10% 0px 10%;
+}
+
+.red_gradient_box {
+  position:relative;
+  display:inline-block;
+  width:100%;
+  height:320px;
+  margin-top:-130px;
+  padding:200px 10px 10px 10px;
+  background:linear-gradient(rgba(255,255,255,0),rgba(255,76,50,0.7));
+}
+
+.project_goals {
+  position:relative;
+  width:100%;
+  min-height:250px;
+  background:white;
+  text-align:center;
+}
+
+/*- Your Portfolio Module -*/
+#your_portfolio_module {
+  position:relative;
+  background:rgba(158,240,225,1);
+}
+
+.portfolio_list {
+  position:relative;
+  width:100%;
+  padding-top:30px;
+  list-style:none;
+  font-size: 0;
+  z-index:1
+}
+
+.portfolio_list li {
+  position:relative;
+  display:inline-block;
+  width:33.3%;
+  margin-bottom:5px;
+}
+
+.portfolio_list .avatar {
+  position:relative;
+  display:block;
+  width:auto;
+  height:100px;
+  margin: 0 auto;
+}
+
+.white_bg_box {
+  position:relative;
+  width:100%;
+  min-height:100px;
+  margin-top:-70px;
+  padding:0 10% 0px 10%;
+  background:white;
+}
+
+.pink_gradient_box {
+  position:relative;
+  display:inline-block;
+  width:100%;
+  height:300px;
+  margin-top:-200px;
+  padding:0px 10px 10px 10px;
+  background:linear-gradient(rgba(158,240,225,0), rgba(243,55,165,1));
+}
+
+/*- Your Challenge Module -*/
+#your_challenges_module {
+  position:relative;
+  padding-bottom:30px;
+  background:rgba(159,200,28,1);
+}
+
+.challenge_steps {
+  position:relative;
+  width:100%;
+  padding:60px 5% 0 5%;
+  margin-bottom:50px;
+  list-style:none;
+  font-size: 0;
+  z-index:1
+}
+
+.challenge_steps li {
+  position:relative;
+  display:inline-block;
+  width:32%;
+  min-height:220px;
+  margin-right:1.95%;
+  font-size:14px;
+  text-align: center;
+}
+
+.challenge_steps li:last-child {
+  margin-right:0;
+}
+
+.challenge_steps li .step {
+  position:relative;
+  color:white;
+  font-size:75px;
+  font-weight:bold;
+  margin-top:-60px;
+}
+
+.challenge_steps li .step .white_subline {
+  position:relative;
+  display: block;
+  width:40px;
+  height:5px;
+  margin:-20px auto 0 auto;
+  background:white;
+}
+
+.challenge_steps li .circle {
+  display:block;
+  width:80%;
+  padding-bottom:80%;
+  background:white;
+  background-size:cover;
+  background-repeat: no-repeat;
+  background-position:center;
+  margin:30px auto 15px auto;
+  border-radius:100%;
+}
+
+
+/*- Connect with us Module -*/
+#connect_module {
+  position:relative;
+  margin-top:100px;
+  padding-bottom:30px;
+}
+
+.big-hashtag {
+  font-size:50px;
+  font-weight:bold;
+}
+
+.big-hashtag span {
+  font-size:25px;
+  font-weight:normal;
+  vertical-align: middle;
+  margin-left:10px;
+  letter-spacing: 2px;
+}
+
+/*- Connect with us Module -*/
+#our_partners_module {
+  position:relative;
+  margin-top:50px;
+  padding-bottom:30px;
+}
+
+.partner_list {
+  position:relative;
+  width:100%;
+  padding:20px 5% 0 5%;
+  margin-bottom:50px;
+  list-style:none;
+  font-size: 0;
+  z-index:1
+}
+
+.partner_list li {
+  position:relative;
+  display:inline-block;
+  width:auto;
+  height:40px;
+  margin:5px;
+}
+
+.partner_list li img {
+  position:relative;
+  display:inline-block;
+  width:auto;
+  height:40px;
+  margin-right:1.95%;
+  font-size:14px;
+  text-align: center;
+}
+
+
+
+
+
+/* HELPER */
+.blue_text{
+  color:rgba(0,84,104,1);
+}
+
+.red_text{
+  color:rgba(255,76,50,1);
+}
+
+.pink_text{
+  color:rgba(243,55,165,1);
+}
+
+.white_bold {
+  color:white;
+  font-weight:bold;
+  line-height:24px;
+}
+
+.blue_bg {
+  background:rgba(0,84,104,1);
+}
+
+.pink_bg {
+  background:rgba(243,55,165,1);
+}
+
+.cyan_bg {
+  background:rgba(158,240,225,1);
+}
+
+.red_bg {
+  background:rgba(255,76,50,1);
+}
+
+
+.inner_wrapper {
+  position:relative;
+  margin-top:-45px;
+  padding:0 10%;
+  text-align:left;
+  z-index:1;
+}
+
+.diagonal_shape {
+  position:relative;
+  width:100%;
+  height:80px;
+  margin-top:-1px;
+  margin-bottom:10px;
+  z-index:0;
+}
+
+.pink_subline {
+  position:relative;
+  display:inline-block;
+  width:7.5%;
+  height:5px;
+  top:-10px;
+  margin-bottom:5px;
+  background:rgba(243,55,165,1)
+}
+
+
+.button {
+  position:relative;
+  display:block;
+  width:70%;
+  max-width:300px;
+  margin:20px auto 50px auto;
+  padding:10px;
+  text-align:center;
+  font-size:18px;
+  letter-spacing:0.9px;
+  color:white;
+}
+
+.social_wrapper {
+  position:relative;
+  list-style: none;
+  text-align: center;
+}
+
+.socialbutton {
+  position:relative;
+  display:inline-block;
+  width:75px;
+  height:75px;
+  margin:5px;
+  padding:5px;
+  background-color:rgba(0,84,104,1);
+  color:white;
+}
+
+.socialbutton img {
+  width:65px;
+  height:65px;
+  filter:invert(100%);
+}
