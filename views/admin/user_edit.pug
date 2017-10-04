@@ -1,0 +1,84 @@
+extends admin.pug
+
+
+//- MIXINS
+
+mixin user(isActive, isBlocked, username, name, email )
+  li(class= (isBlocked ? 'blocked' : (isActive ? 'active' : 'inactive')) )
+    div.left
+      div.username= username
+      div.name= name
+      div.email= email
+    div.right
+      a(href="/admin/user/"+username+"/edit")
+        div.edit edit
+      a(href="/admin/user/"+username+"/block")
+        div(class= (isBlocked ? 'unblock' : 'block')) #{isBlocked ? 'unblock' : 'block'}
+
+
+
+
+block content
+
+  //- Sidebar
+  div#sidebar
+    ul
+      a(href="/admin/users")
+        li.active Users
+      a(href="/admin/challenges")
+        li Challenges
+      a(href="/admin/projects")
+        li Projects
+      li.span |
+      a(href="/admin/pages/index")
+        li Index
+      a(href="/admin/pages/about-us")
+        li About Us
+      a(href="/admin/pages/challenges")
+        li Challenges
+      a(href="/admin/pages/partners")
+        li Partners
+
+
+  div.content-wrapper
+
+    img(class="profile_img" src=data.meta.profile_img)
+
+    form(method="POST", action="/admin/user/sir_clee/edit")
+      input(type="text", name="username", value=data.username)
+      input(type="text", name="email", value=data.email)
+
+      h1= "Profile"
+
+      label(for="first_name") First Name:
+        input(type="text", name="first_name", value=data.name.first)
+
+      label(for="last_name") Last Name:
+        input(type="text", name="last_name", value=data.name.last)
+
+      label(for="title") Job Title:
+        input(type="text", name="title", value=data.meta.title, placeholder="title")
+
+      label(for="description") Bio:
+        textarea(type="text", name="description",rows="3",placeholder="Your short biography...") #{data.meta.description}
+
+
+      h1= "Social"
+
+      label(for="facebook") Facebook:
+        input(type="text", name="facebook", value=data.meta.facebook, placeholder="https://facebook.com/...")
+
+      label(for="twitter") Twitter:
+        input(type="text", name="twitter", value=data.meta.twitter, placeholder="https://twitter.com/...")
+
+      label(for="linkedin") LinkedIn:
+        input(type="text", name="linkedin", value=data.meta.linkedin, placeholder="https://linkedin.com/...")
+
+      label(for="instagram") Instagram:
+        input(type="text", name="instagram", value=data.meta.instagram, placeholder="https://instagram.com/...")
+
+      label(for="website") Website:
+        input(type="text", name="website", value=data.meta.website, placeholder="https://yourwebpage.com/...")
+
+
+      input(type="submit", name="submit", value="Save")

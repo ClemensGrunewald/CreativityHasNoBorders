@@ -1,0 +1,46 @@
+extends admin.pug
+
+
+//- MIXINS
+
+mixin user(isActive, isBlocked, username, name, email )
+  li(class= (isBlocked ? 'blocked' : (isActive ? 'active' : 'inactive')) )
+    div.left
+      div.username= username
+      div.name= name
+      div.email= email
+    div.right
+      a(href="/admin/user/"+username+"/edit")
+        div.edit edit
+      a(href="/admin/user/"+username+"/block")
+        div(class= (isBlocked ? 'unblock' : 'block')) #{isBlocked ? 'unblock' : 'block'}
+
+
+
+
+block content
+
+  //- Sidebar
+  div#sidebar
+    ul
+      a(href="/admin/users")
+        li.active Users
+      a(href="/admin/challenges")
+        li Challenges
+      a(href="/admin/projects")
+        li Projects
+      li.span |
+      a(href="/admin/pages/index")
+        li Index
+      a(href="/admin/pages/about-us")
+        li About Us
+      a(href="/admin/pages/challenges")
+        li Challenges
+      a(href="/admin/pages/partners")
+        li Partners
+
+
+  div.content-wrapper
+    ul#usertable
+      each val in data
+        +user(val.isActive, val.isBlocked, val.username, val.name.first+" "+val.name.last, val.email)

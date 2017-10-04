@@ -1,5 +1,7 @@
 var config          = require('../config');
 var User            = require('../models/user.js');
+var Project         = require('../models/project.js');
+var Challenge       = require('../models/challenge.js');
 var cookieSession   = require('cookie-session');
 var crypto          = require('crypto');
 var sendmail        = require('sendmail')();
@@ -19,7 +21,8 @@ module.exports.process_login = function(req, res) {
   //- User Data Validation
   if(raw_data.email.toLowerCase() != '' && (raw_data.password != null && raw_data.password != '')){
 
-    User.findOne({$or: [{ username: raw_data.email },{ email: raw_data.email }], isActive: true}, function(err, user) {
+    //- Find user
+    User.findOne({$or: [{ username: raw_data.email },{ email: raw_data.email }], isActive: true, isBlocked:false}, function(err, user) {
       if(!user){
         return res.render('login',{ title: 'Login | Creativity Has No Borders', error:"Invalid Username, Email or Password", data: {email:raw_data.email}})
       }
@@ -30,14 +33,27 @@ module.exports.process_login = function(req, res) {
           return res.render('login',{ title: 'Login | Creativity Has No Borders', error:"Invalid Username, Email or Password", data: {email:raw_data.email}})
         }
 
-        //- Set Up Session Cookie
-        var obj = {};
-        obj.username = user.username;
-        obj.email = user.email;
-        obj.token = user.reg_token;
-        req.session.user = obj;
+        //- Set new access token if needed
+        if(user.access_token_expires < Date.now()+24*60*60*1000){
+          user.access_token = crypto.randomBytes(20).toString('hex');
+          user.access_token_expires = Date.now() + 3600000*24*7;
+        }
 
-        res.redirect("/");
+
+        //- Save and Redirect
+        user.save(function (err) {
+          if(err) {return res.redirect("/auth/login");}
+
+          //- Set Up Session Cookie
+          var obj = {};
+          obj.username = user.username;
+          obj.email = user.email;
+          obj.token = user.access_token;
+          obj.isAuthenticated = true;
+          req.session.user = obj;
+
+          res.redirect("/");
+        });
       });
 
     })
@@ -71,7 +87,10 @@ module.exports.process_register = function(req, res) {
     User.find({ $or: [{username: user.username},{email:user.email}]}, function(err, users) {
 
       if(users.length === 0){
-        var reg_token = crypto.randomBytes(20).toString('hex');
+
+        //- Set initial Access token which also gets used as registration token
+        var access_token = crypto.randomBytes(20).toString('hex');
+        var access_token_expires = Date.now() + 3600000;
 
         //- create a new user
         var newUser = new User({
@@ -82,9 +101,9 @@ module.exports.process_register = function(req, res) {
           username: user.username,
           email: user.email,
           password: user.password,
-          reg_token: reg_token
+          access_token: access_token,
+          access_token_expires: access_token_expires
         });
-
 
         //- save user to database
         newUser.save(function(err) {
@@ -99,7 +118,7 @@ module.exports.process_register = function(req, res) {
                 from: 'no-reply@creativityhasnoborders.com',
                 to: user.email,
                 subject: '[CHNB] Activate your Account',
-                html: 'Click here to activate your Account: '+config.host+'/auth/confirmation/'+reg_token,
+                html: 'Click here to activate your Account: '+config.host+'/auth/confirmation/'+access_token,
               }, function(err, reply) {});
           }
 
@@ -126,10 +145,16 @@ module.exports.process_register = function(req, res) {
 module.exports.process_confirmation = function(req, res) {
 
   //- Update Database entry - Activate User
-  User.update({reg_token: req.params.token},{ $set: { isActive: true }},{multi: false}, function(err, users) {
+  User.update({access_token: req.params.token, access_token_expires: { $gt: Date.now() }},{ $set: { isActive: true }},{multi: false}, function(err, users) {
 
+    //- If activation process was successfull -> redirect to the login page
     if(users.ok > 0){
       res.redirect("/auth/login")
+    }
+
+    //- else redirect him to the main page (without error)
+    else {
+      res.redirect("/");
     }
 
   });
@@ -143,19 +168,20 @@ module.exports.render_password_reset = function(req, res) {
 
 //- POST Password Reset
 module.exports.process_password_reset = function(req, res) {
-
   var raw_data = req.body;
 
-  if(raw_data.email.toLowerCase() != '' && raw_data.email.toLowerCase() != undefined && raw_data.email.toLowerCase() != null){
+  //- Validate e-mail adress
+  if(isAlphanumericExtended(raw_data.email) && raw_data.email.toLowerCase() != '' && raw_data.email.toLowerCase() != undefined && raw_data.email.toLowerCase() != null){
 
+    //- Find user with specific e-mail
     User.findOne({ email: raw_data.email }, function(err, user) {
       if(!user){
         return res.redirect("/auth/password-reset");
       }
 
       //- Create and save Token to Database
-      user.resetPasswordToken = crypto.randomBytes(20).toString('hex');
-      user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
+      user.reset_password_token = crypto.randomBytes(20).toString('hex');
+      user.reset_password_token_expires = Date.now() + 3600000; // 1 hour
       user.save(function (err) {
         if(err) {return res.redirect("/auth/password-reset");}
       });
@@ -165,7 +191,7 @@ module.exports.process_password_reset = function(req, res) {
         from: 'no-reply@creativityhasnoborders.com',
         to: user.email,
         subject: '[CHNB] Reset your Password',
-        html: 'Click here to reset your Password: '+config.host+'/auth/password-reset/'+user.resetPasswordToken,
+        html: 'Click here to reset your Password: '+config.host+'/auth/password-reset/'+user.reset_password_token,
       }, function(err, reply) {});
 
       //- Render confirmation page
@@ -173,6 +199,8 @@ module.exports.process_password_reset = function(req, res) {
 
     });
 
+  } else {
+    res.render('password_reset',{ title: 'Password Reset | Creativity Has No Borders', error:"The provided e-mail address is invalid. Please try again.", data: {email:req.body.email}})
   }
 };
 
@@ -180,7 +208,7 @@ module.exports.process_password_reset = function(req, res) {
 module.exports.render_password_reset_new = function(req, res) {
 
   //- find user with the right token
-  User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
+  User.findOne({ reset_password_token: req.params.token, reset_password_token_expires: { $gt: Date.now() } }, function(err, user) {
     if(!user) {
       return res.redirect("/");
     }
@@ -193,7 +221,7 @@ module.exports.render_password_reset_new = function(req, res) {
 module.exports.process_password_reset_new = function(req, res) {
 
   //- Find User with the provided Token
-  User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
+  User.findOne({ reset_password_token: req.params.token, reset_password_token_expires: { $gt: Date.now() } }, function(err, user) {
     if(!user){
       return res.render('password_reset_new',{ title: 'Password Reset | Creativity Has No Borders', error:"Invalid Link or something else has happened", data: null})
     }
@@ -201,8 +229,8 @@ module.exports.process_password_reset_new = function(req, res) {
     //- Save new (valid) password to database
     if (req.body.password === req.body.confirm_password && req.body.password != '' && req.body.password.length >= 8){
       user.password = req.body.password;
-      user.resetPasswordToken = null;
-      user.resetPasswordExpires = null;
+      user.reset_password_token = null;
+      user.reset_password_token_expires = null;
       user.save(function (err) {
         res.redirect("/auth/login")
       });
@@ -213,7 +241,6 @@ module.exports.process_password_reset_new = function(req, res) {
   });
 
 };
-
 
 
 //- Helperfunctions
@@ -229,23 +256,4 @@ function isAlphanumericExtended(string){
        return false;
     }
     return true;
-}
-
-function isAuthenticated(){
-  console.log(req.session.user);
-
-  if(req.session.user){
-
-    User.findOne({ username: req.session.user.username, email: req.session.user.email, reg_token: req.session.user.reg_token }, function(err, user) {
-      if(!user) {
-        return res.redirect("/auth/login");
-      }
-      return next();
-    });
-
-  }
-}
-
-function isAdmin(){
-  return next();
 }

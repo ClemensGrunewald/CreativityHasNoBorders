@@ -1,5 +1,5 @@
-//- include ./modules/mixins.pug
-extends ../public_layout.pug
+extends ../layout.pug
+include ../modules/mixins.pug
 
 
 //- Stylesheets exclusive for this subpage
@@ -12,13 +12,10 @@ block scripts
 //- Main content to extend the Layout template
 block content
 
-  - var data = {modules:[{module:"the_project_module", title: "THE PROJECT."}]}
+  - var data = {page: "index", modules:[{order: 1, name:"the_project_module", title: "THE PROJECT."}], timestamp: 1 }
+
   //- LOGO MODULE
-  div#logo_module(class="centered")
-    svg(class="diagonal_shape" viewBox="0 0 100 10" preserveAspectRatio="none")
-      path(d="M 0,0 L 100,0 100,4 0,10 z" style="fill: white;")
-    img(class="logo_80percent" src="/images/logo.png" alt="Creativity has no Borders - Logo")
-    span.pink_subline
+  +logoModule
 
 
   //- THE PROJECT MODULE

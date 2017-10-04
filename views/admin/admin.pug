@@ -1,0 +1,42 @@
+doctype html
+html
+  head
+    //- Metadata
+    meta(charset='utf-8')
+    meta(name='author' content='Papel & Caneta')
+    meta(name='description' content='Creativity has no borders gives refugees and agencies a chance to find each other.')
+    meta(name='keywords' content='creativity, refugees, no borders, papel, caneta')
+    meta(name='copyright' content='creativityhasnoborders.com')
+    meta(name='robots' content='index, follow')
+    meta(name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1')
+
+    //- Title
+    title= title
+
+    //- Stylesheets
+    link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Josefin+Sans:700|Roboto+Condensed:400,700')
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css')
+    link(rel='stylesheet', href='/styles/admin.css')
+
+    //- Pre-Scripts
+    script(src='/js/jquery-3.2.1.slim.min.js')
+    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js')
+    script(src='https://use.fontawesome.com/289ece6f72.js')
+
+  body
+
+    //- Navbar
+    nav(role="navigation" class="navbar navbar-light fixed-top")
+      a(href="/admin")
+        h1= "Admin Dashboard"
+      a(href="/")
+        div.menu-text Go Back
+
+    //- Content
+    block content
+
+
+
+    //- Scripts
+    script.

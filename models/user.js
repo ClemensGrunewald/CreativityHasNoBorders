@@ -22,9 +22,11 @@ var userSchema = new Schema({
   isMod: { type: Boolean, default: false },
   isActive: { type: Boolean, default: false },
   isBlocked: { type: Boolean, default: false },
-  reg_token: String,
-  resetPasswordToken: String,
-  resetPasswordExpires: Date,
+  isAgencyUser: { type: Boolean, default: false },
+  access_token: String,
+  access_token_expires: Date,
+  reset_password_token: String,
+  reset_password_token_expires: Date,
   meta: {
     profile_img: String,
     cover_img: String,
@@ -46,7 +48,9 @@ var userSchema = new Schema({
 //- Password Hashing before saving
 userSchema.pre('save', function(next){
   var user = this;
-  user.created_at = new Date();
+  if(!user.created_at){
+    user.created_at = new Date();
+  }
   user.updated_at = new Date();
 
   if (!user.isModified('password')) return next(); //- Only hash password if it is new
