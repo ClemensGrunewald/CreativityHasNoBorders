@@ -1,0 +1,211 @@
+
+/*- Logo Module -*/
+#header_module {
+  position:relative;
+  padding-top:50px;
+  box-sizing: border-box;
+}
+
+.profile_image {
+  position:relative;
+  display:block;
+  width:45vw;
+  max-width:400px;
+  height:auto;
+  margin:0px auto 0px auto;
+  z-index:1;
+}
+
+/*- Profile Module -*/
+#profile_module {
+  position:relative;
+  padding:10% 10% 0px 10%;
+}
+
+#profile_module h1 {
+  text-transform: uppercase;
+  font-size:2em;
+}
+
+#profile_module .profile_info {
+  padding-bottom:20px;
+  box-sizing: border-box;
+}
+
+
+#profile_module .profile_info .personal, #profile_module .profile_info .professional {
+  font-size:1.2em;
+  line-height: 1.4em;
+  margin:0;
+  font-weight:bold;
+}
+
+#profile_module .profile_info .bio {
+  font-size:1.2em;
+  line-height: 1.4em;
+  margin-top:0.5em;
+}
+
+/*- Project Module -*/
+#project_module {
+  position:relative;
+  padding:0% 5vw 0px 5vw;
+  box-sizing: border-box;
+}
+
+#project_module .project_list {
+  position:relative;
+  font-size: 0;
+}
+#project_module .project_list .project_wrapper {
+  display:inline-block;
+  position:relative;
+  width:45vw;
+  max-width:300px;
+  padding:7.5px;
+  box-sizing: border-box;
+  list-style: none;
+  font-size:10px;
+  vertical-align: top;
+}
+
+#project_module .project_list .img {
+  position:relative;
+  width:100%;
+  height:150px;
+  background:grey;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+#project_module .project_list .project_wrapper .project_info {
+  position:relative;
+  padding:5px 0;
+}
+
+
+#project_module .project_list .project_wrapper .project_info h3 {
+  position:relative;
+  text-align: left;
+  font-size:1.6em;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+  line-height: 2em;
+  margin:0;
+}
+
+#project_module .project_list .project_wrapper .project_info p {
+  display:block;
+  position:relative;
+  text-align: left;
+  font-size:1.3em;
+  letter-spacing: 0.05em;
+  line-height: 1.6em;
+}
+
+
+
+
+
+
+/* HELPER */
+.blue_text{
+  color:rgba(0,84,104,1);
+}
+
+.red_text{
+  color:rgba(255,76,50,1);
+}
+
+.pink_text{
+  color:rgba(243,55,165,1);
+}
+
+.white_bold {
+  color:white;
+  font-weight:bold;
+  line-height:24px;
+}
+
+.blue_bg {
+  background:rgba(0,84,104,1);
+}
+
+.pink_bg {
+  background:rgba(243,55,165,1);
+}
+
+.cyan_bg {
+  background:rgba(158,240,225,1);
+}
+
+.red_bg {
+  background:rgba(255,76,50,1);
+}
+
+
+.inner_wrapper {
+  position:relative;
+  margin-top:-45px;
+  padding:0 10%;
+  text-align:left;
+  z-index:1;
+}
+
+.diagonal_shape {
+  position:relative;
+  width:100%;
+  height:25vw;
+  margin-top:-20vw;
+  margin-bottom:-7px;
+  z-index:0;
+}
+
+.pink_subline {
+  position:relative;
+  display:inline-block;
+  width:7.5%;
+  height:5px;
+  top:-10px;
+  margin-bottom:5px;
+  background:rgba(243,55,165,1)
+}
+
+
+.button {
+  position:relative;
+  display:block;
+  width:70%;
+  max-width:300px;
+  margin:20px auto 50px auto;
+  padding:10px;
+  text-align:center;
+  font-size:18px;
+  letter-spacing:0.9px;
+  color:white;
+  cursor:pointer;
+}
+
+.social_wrapper {
+  position:relative;
+  list-style: none;
+  text-align: center;
+}
+
+.socialbutton {
+  position:relative;
+  display:inline-block;
+  width:75px;
+  height:75px;
+  margin:5px;
+  padding:5px;
+  background-color:rgba(0,84,104,1);
+  color:white;
+}
+
+.socialbutton img {
+  width:65px;
+  height:65px;
+  filter:invert(100%);
+}

@@ -1,0 +1,20 @@
+doctype html
+html
+  head
+    meta(charset="utf-8")
+    title= title
+  body
+
+
+    //- In Case of any errors
+    if(error != null)
+      div.error #{error}
+
+    form(method="POST")
+      input(type="text" name="username" placeholder="username" value=(error != null ? data.username : '') pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{1,20}$" required)
+      input(type="text" name="first_name" placeholder="first name" value=(error != null ? data.first_name : '') pattern="^[a-zA-Z\-]{1,20}$" required)
+      input(type="text" name="last_name" placeholder="last name" value=(error != null ? data.last_name : '') pattern="^[a-zA-Z\-]{1,20}$" required)
+      input(type="text" name="email" placeholder="email" value=(error != null ? data.email : '') pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" required)
+      input(type="password" name="password" placeholder="password" value="" pattern=".{8,}" title="At least 8 characters long" required)
+      input(type="password" name="confirm_password" placeholder="confirm password" value="" pattern=".{8,}" title="At least 8 characters long" required)
+      input(type="submit" name="submit" value="Register")

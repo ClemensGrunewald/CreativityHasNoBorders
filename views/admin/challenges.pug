@@ -1,0 +1,58 @@
+extends admin.pug
+
+
+//- MIXINS
+mixin challenge(name, title, desc, author, cover, shortMode, countdown, active_until, active)
+  a(href="/admin/challenges/"+name+"/edit")
+    li
+      div.cover
+        if (cover === '')
+          img(src="/images/img_not_available.jpg")
+        else
+          img(src=cover)
+      div.content
+        h1= title
+        span by&nbsp;
+        span.author= author
+        div.meta
+          if shortMode.enabled
+            div.countdown
+              i(class="fa fa-clock-o" aria-hidden="true")
+              span= countdown +" min"
+          div.active_until
+            i(class="fa fa-calendar-times-o" aria-hidden="true")
+            span=active_until
+          if !active
+            div.active_until
+              i(class="fa fa-ban" aria-hidden="true")
+              span inactive
+
+
+block content
+
+  //- Sidebar
+  div#sidebar
+    ul
+      a(href="/admin/users")
+        li Users
+      a(href="/admin/challenges")
+        li.active Challenges
+      a(href="/admin/projects")
+        li Projects
+      li.span |
+      a(href="/admin/pages/index")
+        li Index
+      a(href="/admin/pages/about-us")
+        li About Us
+      a(href="/admin/pages/challenges")
+        li Challenges
+      a(href="/admin/pages/partners")
+        li Partners
+
+
+  div.content-wrapper
+    ul#challengelist
+      a(href="/admin/challenges/new")
+        li.new +
+      each val in data
+        +challenge(val.name, val.title, val.description, val.author, val.cover, val.shortMode, val.shortMode.countdown, val.active_til, val.isActive)

@@ -1,0 +1,160 @@
+extends layout.pug
+include ../modules/mixins_index.pug
+
+
+//- Stylesheets exclusive for this subpage
+block styles
+  link(rel='stylesheet', href='/styles/index_modules.css')
+
+//- Stylesheets exclusive for this subpage
+block scripts
+
+//- Main content to extend the Layout template
+block content
+
+  //- LOGO MODULE
+  +logoModule
+
+
+  //- THE PROJECT MODULE
+  div#the_project_module
+    div.red_gradient_box
+      h1= data.modules[0].title.substring(0, data.modules[0].title.indexOf(" "))
+      h1= data.modules[0].title.substring(data.modules[0].title.indexOf(" ")+1, data.modules[0].title.length)
+      span.pink_subline
+    div.project_goals
+      img(class="goals" src="images/index_project_goals.png")
+    a(href="#")
+      div.button(class="blue_bg") About us
+
+
+  //- YOUR PORTFOLIO MODULE
+  div#your_portfolio_module(class="centered")
+    div.wrapper
+      svg(class="diagonal_shape" viewBox="0 0 100 10" preserveAspectRatio="none")
+        path(d="M 0,0 L 100,0 100,4 0,10 z" style="fill: white;")
+      div.inner_wrapper
+        h1(class="red_text") YOUR
+        h1(class="red_text") PORTFOLIO.
+        span.pink_subline
+
+        p
+          | <strong>Every new Chapter begins somewhere. Yours can start here.</strong> <br>
+          | Sign up and create your own individualized portfolio.
+
+        ul.portfolio_list
+          li
+            a(href="#" class="centered")
+              img(class="avatar" src="/images/logo-icon2.png" alt="name")
+              p(style="font-size:14px;") Hans Peter
+
+          li
+            a(href="#" class="centered")
+              img(class="avatar" src="/images/logo-icon2.png" alt="name")
+              p(style="font-size:14px;") Peter Pan
+
+          li
+            a(href="#" class="centered")
+              img(class="avatar" src="/images/logo-icon2.png" alt="name")
+              p(style="font-size:14px;") Mickey Maus
+
+          li
+            a(href="#" class="centered")
+              img(class="avatar" src="/images/logo-icon2.png" alt="name")
+              p(style="font-size:14px;") Donald Duck
+
+    div.white_bg_box
+      div.pink_gradient_box
+      a(href="#")
+        div.button(class="pink_bg") Sign up today
+
+
+
+  //- YOUR CHALLENGES MODULE
+  div#your_challenges_module(class="centered")
+    svg(class="diagonal_shape" viewBox="0 0 100 10" preserveAspectRatio="none")
+      path(d="M 0,0 L 100,0 100,4 0,10 z" style="fill: white;")
+    div.inner_wrapper
+      h1 YOUR
+      h1 CHALLENGES.
+      span.pink_subline
+
+      p
+        | <strong>Tasks based on actual marketing problems that prove the skills in various fields of expertise.</strong> <br>
+        | Take part and your creative solutions will stock up your portfolio.
+
+    ul.challenge_steps
+      li(class="pink_bg")
+        div.step 01
+          span.white_subline
+        div.circle
+        p.white_bold
+          | Make <br>
+          | challenges
+
+      li(class="cyan_bg")
+        div.step 02
+          span.white_subline
+        div.circle
+        p.white_bold
+          | Build <br>
+          | portfolio
+
+      li(class="red_bg")
+        div.step 03
+          span.white_subline
+        div.circle
+        p.white_bold
+          | Get <br>
+          | interviews
+
+
+
+    a(href="#")
+      div.button(class="blue_bg") Start today
+
+
+
+  //- CONNECT WITH US MODULE
+  div#connect_module
+    div.inner_wrapper
+      h1(class="red_text") CONNECT
+      h1(class="red_text") WITH US.
+      span.pink_subline
+      p(class="pink_text big-hashtag") #
+        span creativityhasnoborders
+
+    iframe(src="https://player.vimeo.com/video/200639677" style="display:block;width:90%;height:40vmax;margin:30px auto;" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen)
+
+    ul.social_wrapper
+      a(href="#")
+        li.socialbutton
+          img(src="/images/icons/fb.png")
+      a(href="#")
+        li.socialbutton
+          img(src="/images/icons/in.png")
+
+
+  //- OUR PARTNER MODULE
+  div#our_partners_module
+    div.inner_wrapper
+      h1 OUR
+      h1 PARTNERS.
+      span.pink_subline
+
+    ul.partner_list
+      li
+        a(href="https://www.miamiadschool.de")
+          img(src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Miami-Ad-School-Logo.svg/2000px-Miami-Ad-School-Logo.svg.png")
+      li
+        a(href="http://www.papelecaneta.org/en")
+          img(src="/images/papelcaneta.png")
+      li
+        a(href="http://www.joblinge.de")
+          img(src="https://www.joblinge.de/fileadmin/user_upload/09_logos/00_logos_joblinge/logo_joblinge_w338.png")
+      li
+        a(href="https://www.arbeitsagentur.de/")
+          img(src="https://zombiewoodproductions.files.wordpress.com/2013/05/arbeitsamt-logo.jpg")
+      li
+        a(href="www.team-arbeit-hamburg.de/")
+          img(src="http://www.team-arbeit-hamburg.de/common/images/logo.jpg")

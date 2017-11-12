@@ -1,0 +1,78 @@
+extends admin.pug
+
+
+//- MIXINS
+
+
+
+block content
+
+  //- Sidebar
+  div#sidebar
+    ul
+      a(href="/admin/users")
+        li Users
+      a(href="/admin/challenges")
+        li.active Challenges
+      a(href="/admin/projects")
+        li Projects
+      li.span |
+      a(href="/admin/pages/index")
+        li Index
+      a(href="/admin/pages/about-us")
+        li About Us
+      a(href="/admin/pages/challenges")
+        li Challenges
+      a(href="/admin/pages/partners")
+        li Partners
+
+
+
+
+  div.content-wrapper
+    if error
+      div.error_alert
+        i(class="fa fa-exclamation-triangle")
+        span.err #{error}
+
+    div#new_challenge
+
+      form(method="POST", action="/admin/challenges/"+data.name+"/edit", encType="multipart/form-data")
+
+        label(class="uploadContainer" for="cover")
+          if (data && data.cover != '')
+            img(src=data.cover)
+          div.caption
+            i(class="fa fa-cloud-upload" aria-hidden="true")
+            span Cover Image
+            input(type="file" name="cover" value="")
+
+        input(type="text", name="title", value=(data && data.title ? data.title : ''), placeholder="Challenge Title*")
+        input(type="text", name="author", value=(data && data.author ? data.author : ''), placeholder="Author*")
+
+        h1= "Details"
+
+        label(for="switch") Short Mode:
+          input(type="checkbox", name="switch", checked=(data && data.shortMode.enabled ? true : false))
+
+          label(for="countdown") Timer:
+            input(type="text", name="countdown", value=(data && data.shortMode.countdown ? data.shortMode.countdown : ''), placeholder="0 min")
+
+        label(for="active_until") Active Until*:
+          input(type="text", name="active_until", value=(data && data.active_til ? data.active_til : ''), placeholder="e.g. 27.12.2017")
+
+        label(for="brief") Brief:
+          if data && data.brief
+            a(href=(data && data.brief ? data.brief : '')) <br>Current Brief<br>
+          input(type="file" name="brief")
+
+        label(for="description") Description*:
+          textarea(type="text", name="description", rows="2",placeholder="A short description of the challenge, that needs to be solved.") #{data && data.description ? data.description : ''}
+
+
+        h1= "Settings"
+
+        label(for="active") Active:
+          input(type="checkbox", name="active", checked=(data && data.isActive ? true : false))
+
+        input(type="submit", name="submit" value="Update")

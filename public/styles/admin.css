@@ -46,7 +46,6 @@ a, a:hover {
 }
 
 
-
 /*- Navigationbar  -*/
 .navbar {
   padding:0 15px;
@@ -100,8 +99,6 @@ nav h1 {
   padding:10px 15px;
   box-sizing: border-box;
   margin:0 5px;
-
-
   list-style: none;
   color:white;
   font-size:2.3vh;
@@ -131,6 +128,34 @@ nav h1 {
   padding:10px;
   margin-top:60px;
 }
+
+.error_alert {
+  position:relative;
+  width:calc(100% - 40px);
+  margin-left:20px;
+  min-height:2vh;
+  padding:5px 15px;
+  box-sizing: border-box;
+  border-radius: 2.5px;
+  background:rgba(255,0,0,0.8);
+  color:white;
+}
+
+.error_alert i {
+  display:inline-block;
+  width:10%;
+  line-height:2vh;
+  vertical-align:middle;
+}
+
+.error_alert .err {
+  display: inline-block;
+  width:90%;
+  font-size:1.8vh;
+  line-height:2vh;
+}
+
+
 
 
 
@@ -224,7 +249,6 @@ nav h1 {
 }
 
 /* EDIT USER */
-
 .content-wrapper .profile_img {
   display:block;
   position:relative;
@@ -311,8 +335,210 @@ input:focus,select:focus,textarea:focus,button:focus {
   outline-width: 0;
 }
 
+input:hover {
+  cursor:pointer;
+}
 
 
+
+
+
+/* CHALLENGES TAB */
+#challengelist {
+  position:relative;
+  width:100%;
+}
+
+#challengelist li {
+  display:inline-block;
+  position:relative;
+  width:100%;
+  margin: 10px auto;
+  border-radius:2.5px;
+  box-shadow: 0 0px 5px -0px rgba(0,0,0,0.5);
+}
+
+#challengelist .new {
+  position:relative;
+  width:100%;
+  min-height:120px;
+  background:lightgrey;
+  text-align: center;
+  font-size:10vh;
+  color:rgba(0,0,0,0.1);
+  line-height: 120px;
+  box-shadow: none;
+}
+
+#challengelist .new:hover {
+  color:rgba(0,0,0,0.3);
+}
+
+
+#challengelist li .cover {
+  position:relative;
+  width:100%;
+  height:auto;
+  max-height: 150px;
+  overflow: hidden;
+}
+
+#challengelist li .cover img {
+  width:100%;
+  height:auto;
+  border-radius: 2.5px 2.5px 0 0;
+}
+
+#challengelist li .content {
+  position:relative;
+  width:100%;
+  box-shadow: 0 -10px 20px -10px rgba(0,0,0,0.5);
+  background:white;
+  padding:10px;
+  box-sizing: border-box;
+  border-radius:0 0 2.5px 2.5px;
+}
+
+
+#challengelist li .content h1 {
+  position:relative;
+  font-size:3vh;
+  font-weight:bold;
+  line-height:3.5vh;
+  margin-bottom:-5px;
+}
+
+#challengelist li .content span {
+  position:relative;
+  font-size:2vh;
+  line-height:16px;
+}
+
+#challengelist li .content .author {
+  font-weight:bold;
+  color:#2c3e50;
+}
+
+#challengelist li .content .meta {
+  position:absolute;
+  top:-30px;
+  right:5px;
+  font-size:1.5vh;
+}
+
+#challengelist li .content .meta > div {
+  display:inline-block;
+  position:relative;
+  padding:5px 10px;
+  box-sizing: border-box;
+  background: #2ecc71;
+  color: white;
+  border-radius:5px;
+}
+
+#challengelist li .content .meta i {
+  font-size:2vh;
+  margin-right:5px;
+}
+
+#challengelist li .content .meta .active_until {
+  background:#e74c3c;
+}
+#challengelist li .content .meta .inactive {
+  background:#e74c3c;
+}
+
+
+/* NEW CHALLENGE */
+#new_challenge {
+  width:100%;
+}
+
+#new_challenge i {
+  font-size:25px;
+  margin-right:10px;
+}
+
+#new_challenge .uploadContainer {
+    overflow: hidden;
+    position:relative;
+    width:100%;
+    height:100px;
+    margin:20px 0;
+    background: white;
+    border:1px solid grey;
+    border-radius: 2.5px;
+    text-align: center;
+    font-size:2vh;
+    line-height:120px;
+    background:lightgrey;
+}
+
+#new_challenge .uploadContainer img {
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  width:100%;
+  height:auto;
+  z-index:0;
+  opacity:0.9;
+}
+
+#new_challenge .uploadContainer .caption {
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  width:100%;
+  height:auto;
+  z-index:1;
+  color:white;
+  text-shadow: 1px 1px 0 grey;
+}
+
+
+#new_challenge .uploadContainer [type=file] {
+    cursor: inherit;
+    display: block;
+    position:absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    text-align: right;
+    cursor: pointer;
+}
+
+#new_challenge input[name="title"]{
+  display:block;
+  width:100%;
+  position: relative;
+  margin:0 auto;
+  text-align: center;
+  font-size:3.5vh;
+  font-weight: bold;
+}
+
+#new_challenge input[name="author"] {
+  display:block;
+  position: relative;
+  margin:0 auto 30px auto;
+  text-align: center;
+}
+
+#new_challenge label[for="countdown"] {
+  display:none;
+}
+
+#new_challenge label > input[type="checkbox"]:checked ~ label[for="countdown"] {
+  display: block;
+  margin-top:10px;
+  margin-bottom:-2px;
+}
 
 
 

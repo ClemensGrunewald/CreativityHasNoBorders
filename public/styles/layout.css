@@ -39,7 +39,7 @@ body {
   color:black;
 }
 
-h1 {
+h1, h2, h3 {
   font-family: 'Josefin Sans', sans-serif;
   font-weight:bold;
   color: rgba(0,84,104,1);
@@ -61,8 +61,9 @@ a, a:hover {
 
 /*- Navigationbar  -*/
 .navbar {
-  padding:0 15px;
+  padding:0px 15px;
   margin:0;
+  z-index:10;
 }
 
 nav {
@@ -94,8 +95,76 @@ nav .burgermenu:hover {
 
 
 /*- Interactive Menu  -*/
+#menu-overlay {
+  display:none;
+  position:fixed;
+  top:0;
+  right:0;
+  left:0;
+  bottom:0;
+  background:rgb(120,120,120);
+  z-index:100;
+  opacity:1;
+  padding:7.5px 15px;
+  box-sizing: border-box;
+  color:white;
+  overflow:hidden;
+}
 
+#menu-overlay .close-menu {
+  position:absolute;
+  top:-7.5px;
+  right:20px;
+  color:white;
+  font-size:45px;
+  cursor:pointer;
+}
 
+#menu-overlay .close-menu:after{
+  display: inline-block;
+  content: "\00d7"; /* This will render the 'X' */
+  transform: scale(1.1,1);
+}
+
+#menu-overlay .menu-list {
+  position:relative;
+  width:100%;
+  height:92vh;
+  padding:8vmin 0 0 0;
+  box-sizing: border-box;
+  overflow: scroll;
+}
+
+#menu-overlay .menu-list .m2 {
+  margin-top:20vmin;
+}
+
+#menu-overlay .menu-list ul a {
+  list-style: none;
+  text-transform: uppercase;
+  color:white;
+}
+
+#menu-overlay .menu-list .m1 li {
+  color:rgba(255,255,255,0.85);
+  font-size:1.5em;
+  font-weight:bold;
+  line-height: 2.2em;
+  letter-spacing: 0.25em;
+}
+
+#menu-overlay .menu-list .m2 li {
+  color:rgba(255,255,255,0.85);
+  font-size:1em;
+  font-weight:200;
+  line-height: 2em;
+  letter-spacing: 0.1em;
+}
+
+#menu-overlay .menu-list li:hover {
+  margin-left:5px;
+  color:rgba(255,255,255,1);
+}
 
 
 
@@ -108,7 +177,6 @@ footer {
   padding: 70px 10% 5px 10%;
   background:rgba(158,240,225,1);
   font-family: 'Roboto Condensed', sans-serif;
-  font-size: 15px;
   color:rgba(0,84,104,1);
   letter-spacing: 0.9px;
 }
@@ -133,11 +201,13 @@ footer .footer-logo img{
 footer p {
   padding:0;
   margin:0 0 15px 0;
+  font-size:0.9em;
+  line-height: 1.4em;
 }
 
 footer .copyright {
   padding:0;
-  margin:90px auto 5px auto;
+  margin:70px auto 5px auto;
   font-size:8px;
 }
 
