@@ -13,7 +13,7 @@ router.get('/', middleware.isAuthenticated, controller.render_admin);
 //- Render User Table
 router.get('/users', middleware.isAuthenticated, controller.render_admin_users);
 
-//-method to block or unblock a given user
+//- Method to block or unblock a given user
 router.get('/user/:username/block', middleware.isAuthenticated, controller.render_admin_users_block);
 
 //- Methods to access and edit userdata (show user)
@@ -23,13 +23,20 @@ router.get('/user/:username/edit', middleware.isAuthenticated, controller.render
 router.post('/user/:username/edit', middleware.isAuthenticated, controller.process_admin_users_edit);
 
 
+//- Render Challenges Tab
+router.get('/challenges', middleware.isAuthenticated, controller.render_admin_challenges);
 
+//- Method to create a new Challenge
+router.get('/challenges/new', middleware.isAuthenticated, controller.render_admin_challenges_new);
 
+//- Method to process the data of a new Challenge
+router.post('/challenges/new', middleware.isAuthenticated, controller.process_admin_challenges_new);
 
+//- Method to edit an existing challenge
+router.get('/challenges/:challenge/edit', middleware.isAuthenticated, controller.render_admin_challenges_edit);
 
-
-
-
+//- Method to process the data of an edited challenge
+router.post('/challenges/:challenge/edit', middleware.isAuthenticated, controller.process_admin_challenges_edit);
 
 
 //- Export routes

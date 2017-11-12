@@ -3,30 +3,40 @@ var config    = require('../config');
 //- Mongoose Database Integration
 var mongoose  = require('mongoose');
 var Schema    = mongoose.Schema;
-mongoose.connect('mongodb://localhost/'+config.mongodb);
+mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://localhost/'+config.mongodb, {useMongoClient: true});
 
 
 //- Create a Challenge Schema
 var challengeSchema = new Schema({
   name: {type: String, required: true, unique: true},
   title: {type: String, required: true},
+  cover: {type: String, default:''},
   description: {type: String, default: "no description available"},
+  brief: {type: String, default:''},
   author: {type: String, required: true},
+  shortMode: {
+      enabled: {type: Boolean, default: false},
+      countdown: {type: Number, default: 0}
+  },
   meta: {
-    cover_img: String,
     images: Array,
     videos: Array,
     documents: Array
   },
   created_at: {type: Date, default: new Date()},
   updated_at: Date,
-  active_until: {type: Date, default: new Date(Date.now()+4*7*24*60*60*1000)},
+  active_until: Date, //{type: Date, default: new Date(Date.now()+4*7*24*60*60*1000)}
+  isActive: {type: Boolean, default: true}
 });
 
-//- Password Hashing before saving
+//- Update the updated_at parameter
 challengeSchema.pre('save', function(next){
   var challenge = this;
   challenge.updated_at = new Date();
+
+  var err = new Error('something went wrong');
+  next();
 });
 
 

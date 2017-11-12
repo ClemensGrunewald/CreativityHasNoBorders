@@ -3,7 +3,8 @@ var config    = require('../config');
 //- Mongoose Database Integration
 var mongoose  = require('mongoose');
 var Schema    = mongoose.Schema;
-mongoose.connect('mongodb://localhost/'+config.mongodb);
+mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://localhost/'+config.mongodb, {useMongoClient: true});
 
 //- Encrypting & Securing Data
 var bcrypt    = require('bcrypt'),
@@ -31,6 +32,7 @@ var userSchema = new Schema({
     profile_img: String,
     cover_img: String,
     title: String,
+    status: String,
     description: String,
     age: Number,
     gender: String,

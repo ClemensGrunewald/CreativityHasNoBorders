@@ -5,7 +5,7 @@ module.exports.render_index = function(req, res) {
 
   //- Database request to get the data structure of the main page
 
-  res.render('index/index',{ title: 'Creativity Has No Borders', error:null, data: {user: {username: req.user.username}, page: "index", modules:[{order: 1, name:"the_project_module", title: "THE PROJECT."}], timestamp: 1 } })
+  res.render('index/index',{ title: 'Creativity Has No Borders', error:null, data: {user: req.user, page: "index", modules:[{order: 1, name:"the_project_module", title: "THE PROJECT."}], timestamp: 1 } })
 };
 
 //- All Portfolios Page

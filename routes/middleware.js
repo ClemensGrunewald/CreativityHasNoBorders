@@ -14,22 +14,30 @@ var middleware = {
         if(!user) {
 
           //- Make Session invalid
-          req.session.user.isAuthenticated = false;
+          req.session = null;
 
           //- Set Variables to Guest User
+          req.user = {};
           req.user.username = "Guest";
           req.user.isAuthenticated = false;
+          console.log(req.user);
+          next();
 
         } else {
           req.user = user;
+          req.user.isAuthenticated = true;
+          console.log("{ username: '"+req.user.username+"' }");
           next();
         }
       });
 
     //if user has an invalid token or no cookie at all -> Guest permissions
     } else {
+      req.user = {};
       req.user.username = "Guest";
       req.user.isAuthenticated = false;
+      console.log(req.user);
+      next();
     }
 
   }

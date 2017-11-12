@@ -3,7 +3,8 @@ var config    = require('../config');
 //- Mongoose Database Integration
 var mongoose  = require('mongoose');
 var Schema    = mongoose.Schema;
-mongoose.connect('mongodb://localhost/'+config.mongodb);
+mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://localhost/'+config.mongodb, {useMongoClient: true});
 
 
 //- Create a Challenge Schema
@@ -20,11 +21,12 @@ var projectSchema = new Schema({
   },
   created_at: {type: Date, default: new Date()},
   updated_at: Date,
+  isApproved: {type: Boolean, required:true}
 });
 
 //- Password Hashing before saving
 projectSchema.pre('save', function(next){
-  var challenge = this;
+  var project = this;
   project.updated_at = new Date();
 });
 
