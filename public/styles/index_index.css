@@ -1,0 +1,64 @@
+
+
+
+/*- Project Goals - 3 Steps -*/
+.project_goals {
+  position:relative;
+  width:100%;
+  min-height:250px;
+  background:white;
+  text-align:center;
+}
+
+.project_goals img {
+  position:relative;
+  width:100%;
+  height:auto;
+  margin-top:-20px;
+}
+
+/* Different Main Page Modules */
+#your_portfolio_module {
+  background:rgba(158,240,225,1);
+  padding-bottom:0;
+}
+
+#your_challenges_module {
+  background:rgba(159,200,28,1);
+  padding-bottom:0;
+}
+
+#your_challenges_module p {
+  padding-bottom:30px;
+}
+
+#our_partners_module {
+  background:rgba(158,240,225,1);
+  padding-bottom:0;
+}
+
+.partner_list {
+  position:relative;
+  width:100%;
+  margin-bottom:50px;
+  list-style:none;
+  font-size: 0;
+  z-index:1
+}
+
+.partner_list li {
+  position:relative;
+  display:inline-block;
+  width:auto;
+  height:40px;
+  margin:5px;
+}
+
+.partner_list li img {
+  position:relative;
+  display:inline-block;
+  width:auto;
+  height:30px;
+  font-size:14px;
+  text-align: center;
+}

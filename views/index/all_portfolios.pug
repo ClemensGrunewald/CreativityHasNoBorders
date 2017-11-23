@@ -1,0 +1,52 @@
+extends ../layout.pug
+include ../modules/mixins_index.pug
+
+
+//- Stylesheets exclusive for this subpage
+block styles
+  link(rel='stylesheet', href='/styles/helpers.css')
+  link(rel='stylesheet', href='/styles/index_all_portfolios.css')
+
+//- Stylesheets exclusive for this subpage
+block scripts
+
+//- Main content to extend the Layout template
+block content
+
+  //- LOGO MODULE
+  +logoModule
+
+  //- THE PROJECT MODULE
+  div#main_all_portfolios(class="main_wrapper")
+    div.top_gradient_box(class="green_gradient")
+      h1(class="red_text")= data.modules[0].title.substring(0, data.modules[0].title.indexOf(" "))
+      h1(class="red_text")= data.modules[0].title.substring(data.modules[0].title.indexOf(" ")+1, data.modules[0].title.length)
+      span.pink_subline
+    div.content-wrapper
+      p
+        | This is where the magic happens. See the creative solutions for all our challenges. Feel free to ask for contact details about anyone you are especially interested in, so we can connect you.
+        | <br> And most of all: Enjoy!
+
+  //- PORTFOLIO LIST
+  div#portfolio_list(class="list")
+    ul.list_wrapper
+      a(href="#")
+        li
+          div.image(style="background-image:url('images/index.png')")
+          div.content
+            h4 SUSI SUNSHINE
+            p > View Portfolio
+
+      a(href="#")
+        li
+          div.image(style="background-image:url('images/index.png')")
+          div.content
+            h4 PENNY PENNROSE
+            p > View Portfolio
+
+      a(href="#")
+        li
+          div.image(style="background-image:url('images/index.png')")
+          div.content
+            h4 SIR_CLEE
+            p > View Portfolio

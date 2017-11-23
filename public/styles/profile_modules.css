@@ -1,116 +1,104 @@
-
-/*- Logo Module -*/
 #header_module {
-  position:relative;
-  padding-top:50px;
-  box-sizing: border-box;
+  padding-bottom:30px;
+  margin-top:5vh;
 }
 
-.profile_image {
-  position:relative;
-  display:block;
-  width:45vw;
-  max-width:400px;
-  height:auto;
-  margin:0px auto 0px auto;
-  z-index:1;
-}
+
+
+
+
+
+
+
 
 /*- Profile Module -*/
 #profile_module {
-  position:relative;
-  padding:10% 10% 0px 10%;
+  padding:5vh 10% 0px 10%;
 }
 
 #profile_module h1 {
   text-transform: uppercase;
-  font-size:2em;
+  font-size:8vmin;
 }
 
-#profile_module .profile_info {
-  padding-bottom:20px;
-  box-sizing: border-box;
+.edit {
+  position:absolute;
+  top:2vh;
+  right:2vh;
+  text-align: right;
+  color:lightgrey;
+  font-size:14px;
+  line-height:30px;
+  text-align: center;
+  cursor:pointer;
 }
 
-
-#profile_module .profile_info .personal, #profile_module .profile_info .professional {
-  font-size:1.2em;
-  line-height: 1.4em;
-  margin:0;
+.profile_info .personal, .profile_info .professional {
   font-weight:bold;
+  font-size:5vmin;
+  line-height:6.5vmin;
+  margin:0;
 }
 
-#profile_module .profile_info .bio {
-  font-size:1.2em;
-  line-height: 1.4em;
-  margin-top:0.5em;
+.profile_info .bio {
+  padding-top:10px;
 }
 
-/*- Project Module -*/
-#project_module {
-  position:relative;
-  padding:0% 5vw 0px 5vw;
-  box-sizing: border-box;
-}
 
-#project_module .project_list {
-  position:relative;
-  font-size: 0;
-}
-#project_module .project_list .project_wrapper {
+
+/* Project List */
+.list_wrapper a li {
   display:inline-block;
   position:relative;
-  width:45vw;
-  max-width:300px;
-  padding:7.5px;
-  box-sizing: border-box;
-  list-style: none;
-  font-size:10px;
+  width:42.5vw;
+  min-height:100px;
+  margin: 2.5vw 2.5vw 2.5vw 5vw;
+  font-size:4vmin;
+  text-align: left;
   vertical-align: top;
 }
 
-#project_module .project_list .img {
+.list_wrapper a:nth-child(even) li {
+  margin: 2.5vw 5vw 2.5vw 2.5vw;
+}
+
+.list_wrapper li .image {
   position:relative;
-  width:100%;
-  height:150px;
-  background:grey;
+  width:42.5vw;
+  height:40vw;
+  padding:0;
+  background: lightgrey;
+  background-repeat:no-repeat;
   background-size: cover;
   background-position: center;
-  background-repeat: no-repeat;
 }
 
-#project_module .project_list .project_wrapper .project_info {
+.list_wrapper li .content {
   position:relative;
-  padding:5px 0;
+  width:100%;
+  min-height:50px;
+  padding:10px 5px 0 5px;
+  box-sizing: border-box;
 }
 
-
-#project_module .project_list .project_wrapper .project_info h3 {
+.list_wrapper li .content h4 {
   position:relative;
-  text-align: left;
-  font-size:1.6em;
-  font-weight: bold;
-  letter-spacing: 0.05em;
-  line-height: 2em;
   margin:0;
+  margin-bottom:0.5vh;
 }
 
-#project_module .project_list .project_wrapper .project_info p {
-  display:block;
+.list_wrapper li .content p {
   position:relative;
-  text-align: left;
-  font-size:1.3em;
-  letter-spacing: 0.05em;
-  line-height: 1.6em;
+  font-size:3.7vmin;
+  line-height: 4.7vmin;
 }
-
 
 
 
 
 
 /* HELPER */
-.blue_text{
+/*.blue_text{
   color:rgba(0,84,104,1);
 }
 
@@ -185,6 +173,7 @@
   letter-spacing:0.9px;
   color:white;
   cursor:pointer;
+  text-transform: uppercase;
 }
 
 .social_wrapper {
@@ -209,3 +198,4 @@
   height:65px;
   filter:invert(100%);
 }
+*/

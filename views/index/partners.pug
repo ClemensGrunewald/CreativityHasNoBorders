@@ -1,0 +1,71 @@
+extends ../layout.pug
+include ../modules/mixins_index.pug
+
+
+//- Stylesheets exclusive for this subpage
+block styles
+  link(rel='stylesheet', href='/styles/helpers.css')
+  link(rel='stylesheet', href='/styles/index_partners.css')
+
+//- Stylesheets exclusive for this subpage
+block scripts
+
+//- Main content to extend the Layout template
+block content
+
+  //- LOGO MODULE
+  +logoModule
+
+  //- PARTNERS
+  div#main_partners(class="main_wrapper")
+    div.top_gradient_box(class="red_gradient")
+      h1(class="blue_text")= data.modules[0].title
+      span.pink_subline
+    div.content_wrapper
+      h3 The Project
+      p <strong>Creativity has no borders</strong> is a project that offers a future to refugees and people in need. We are connecting people, agencies, companies, schools and academies through the language of creativity.
+      iframe(src="https://player.vimeo.com/video/200639677" style="display:block;position:relative;width:100%;height:30vmax; margin:2.5vmax auto" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen)
+      a(href="")
+        div.button(class="green_bg") Download Pressmaterial
+
+
+  //- SUPPORT US
+  div#support_us(class="main_wrapper")
+    div.content_wrapper
+      h3 SUPPORT US!
+      p Help passionate and idea-driven refugees, increase diversity in the German creative sector and create awareness for your business by supporting this beneficial project. Scholarships, internships and job offers are as welcome as hardware or... let´s just talk about it.
+      a(href="http://papelecaneta.org/en/" target="_blank")
+        div.button(class="blue_bg") PARTNERS@CHNB.COM
+
+
+
+  //- TEAM
+  div#partner(class="diagonal_box")
+    svg(class="diagonal_shape" viewBox="0 0 100 10" preserveAspectRatio="none")
+      path(d="M 0,0 L 100,0 100,4 0,10 z" style="fill: white;")
+    div.inner_wrapper
+      h1(class="blue_text") Our
+      h1(class="blue_text") Partners
+      span.pink_subline
+      p This is our partners who support us with offers, contacts, stuff and belief.
+
+      div#partner_list(class="list")
+        ul.list_wrapper
+          a(href="#")
+            li(style="background-image:url('images/partners/miami-ad-school.png')")
+          a(href="#")
+            li(style="background-image:url('images/partners/joblinge.png')")
+          a(href="#")
+            li(style="background-image:url('images/partners/arbeitsamt.png')")
+          a(href="#")
+            li(style="background-image:url('images/partners/team-arbeit-hamburg.png')")
+          a(href="#")
+            li(style="background-image:url('images/partners/papelcaneta.png')")
+
+  div#contact_us
+    div.content_wrapper
+      h1(class="red_text") CONTACT US
+      p <strong> #CreativityHasnoBorders </strong>
+      p Do you have questions or ideas that don't fit any category? Well, it so happens hat we are experts in non-category stuff. Feel free to contact us in any way.
+      a(href="")
+        div.button(class="blue_bg") PARTNERS@CHNB.COM

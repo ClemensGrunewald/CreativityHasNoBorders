@@ -1,0 +1,69 @@
+
+/* Teammembers Box & List */
+#team {
+  margin-top:50px;
+  background:rgba(0,84,104,1);
+}
+
+#team .inner_wrapper {
+  padding-left:5%;
+  padding-right:5%;
+}
+
+#team p {
+  color:white;
+}
+
+
+.list_wrapper li {
+  display:inline-block;
+  position:relative;
+  width:42.5vw;
+  min-height:100px;
+  margin:2.5vw 2.5vw 2.5vw 0;
+  font-size:4vmin;
+  text-align: left;
+  vertical-align: top;
+}
+
+.list_wrapper li:nth-child(even) {
+  margin:2.5vw 0 2.5vw 2.5vw;
+}
+
+.list_wrapper li .image {
+  position:relative;
+  width:35vw;
+  height:35vw;
+  padding:0;
+  margin:0 auto;
+  background: lightgrey;
+  background-repeat:no-repeat;
+  background-size: cover;
+  background-position: center;
+  border-radius: 100%;
+}
+
+.list_wrapper li .content {
+  position:relative;
+  width:100%;
+  min-height:50px;
+  padding:10px 5px 0 5px;
+  box-sizing: border-box;
+}
+
+.list_wrapper li .content h4 {
+  position:relative;
+  margin:0;
+  font-size:3.5vmin;
+  line-height:4.5vmin;
+  color:white;
+  text-align: center;
+}
+
+.list_wrapper li .content p {
+  position:relative;
+  font-size:2.5vmin;
+  line-height: 4vmin;
+  text-transform: uppercase;
+  text-align: center;
+}

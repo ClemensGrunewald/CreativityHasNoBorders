@@ -1,0 +1,130 @@
+/* Top/Logo Module */
+#logo_module, #header_module {
+  position:relative;
+  padding-bottom:50px;
+  background:rgba(158,240,225,1);
+}
+
+.logo_80percent {
+  position:relative;
+  display:block;
+  width:80%;
+  max-width:800px;
+  height:auto;
+  margin:25px auto 20px auto;
+}
+
+.avatar {
+  position:relative;
+  display:block;
+  width:30vh;
+  max-width:350px;
+  height:auto;
+  margin:-20vh auto 0 auto;
+  z-index:1;
+}
+
+
+
+/* Wrapper for Everything */
+.main_wrapper {
+  position:relative;
+  padding:0 10% 0px 10%;
+}
+
+.content_wrapper {
+  position:relative;
+  padding:40px 15px 0px 15px;
+}
+
+.content_wrapper p {
+  font-size:4vmin;
+  line-height: 5.2vmin;
+}
+
+.inner_wrapper {
+  position:relative;
+  margin-top:-10vmax;
+  padding:0 10% 0 10%;
+  text-align:left;
+  z-index:1;
+}
+
+/* Gradient Boxes */
+.top_gradient_box {
+  position:relative;
+  display:inline-block;
+  width:100%;
+  height:30vmax;
+  min-height: 300px;
+  margin-top:-130px;
+  padding:170px 10px 20px 10px;
+}
+
+.body_gradient_box {
+  position:relative;
+  display:inline-block;
+  margin-bottom:-25px;
+  padding:10px 15px 25px 15px;
+}
+
+.body_gradient_box p {
+  font-size:4vmin;
+  line-height: 5.2vmin;
+}
+
+/* Diagonal Box */
+.diagonal_box {
+  position:relative;
+  width:100%;
+  padding-bottom:30px;
+  background:lightgrey;
+}
+
+.diagonal_shape {
+  position:relative;
+  width:100%;
+  height:20vmax;
+  margin-top:-3vmax;
+  margin-bottom:10px;
+  z-index:0;
+}
+
+.white_box {
+  position:relative;
+  width:100%;
+  min-height:100px;
+  padding:20px 10% 20px 10%;
+  box-sizing: border-box;
+  background:white;
+}
+
+/* Lists */
+.list {
+  position: relative;
+  font-size:0;
+}
+
+.list_wrapper {
+  position:relative;
+  width:100%;
+}
+
+.list_wrapper li {
+  position:relative;
+}
+
+.centered {
+  text-align: center;
+}
+
+
+
+
+
+/* WHOLE MODULES */
+#contact_us {
+  position:relative;
+  padding:0 10% 0px 10%;
+  text-align: center;
+}

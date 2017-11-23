@@ -1,0 +1,16 @@
+
+/* Partner List Box */
+#partner {
+  background:rgba(159,200,28,1);
+}
+
+#partner_list .list_wrapper li {
+  width:80%;
+  height:60px;
+  text-align:center;
+  margin: 15px auto;
+  background:transparent;
+  background-repeat:no-repeat;
+  background-size:contain;
+  background-position: center;
+}

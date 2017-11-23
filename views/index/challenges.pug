@@ -1,0 +1,86 @@
+extends ../layout.pug
+include ../modules/mixins_index.pug
+
+
+//- Stylesheets exclusive for this subpage
+block styles
+  link(rel='stylesheet', href='/styles/helpers.css')
+  link(rel='stylesheet', href='/styles/index_challenges.css')
+
+//- Stylesheets exclusive for this subpage
+block scripts
+
+//- Main content to extend the Layout template
+block content
+
+  //- LOGO MODULE
+  +logoModule
+
+  //- CURRENT CHALLENGE
+  div#current_challenge(class="main_wrapper")
+    div.top_gradient_box(class="green_gradient")
+      h1(class="blue_text")= data.modules[0].title.substring(0, data.modules[0].title.indexOf(" "))
+      h1(class="blue_text")= data.modules[0].title.substring(data.modules[0].title.indexOf(" ")+1, data.modules[0].title.length)
+      span.pink_subline
+    div.content_wrapper
+      h4 Current challenge
+      h2.title Sustainable Public Transport
+      p.timeframe DATE: 01.04.2017 - 30.04.2017
+      p The current brief challenges you in terms of creativity and sustainability. It has been set up by one of our first partner agencies and It's for a real client! Ready?<br><strong>Then go for it and have fun!</strong>
+      p Warning! Timer starts running once you progress.
+      p Countdown:
+      h2.countdown(class="red_text") 00:01:30:00
+      a(href="")
+        div.button(class="blue_bg") Download current Brief
+      a(href="")
+        div.button(class="red_bg") Upload your solution
+
+  //- DECORATIONAL ELEMENT
+  div(style="position:relative; width:100%; height:200px; background:black;")
+
+  //- PREVIOUS CHALLENGES
+  div#past_challenges(class="main_wrapper")
+    div.content_wrapper
+      h4(class="red_text") Past challenge
+      h2.title The fastest way to work
+      p.timeframe DATE: 01.04.2017 - 30.04.2017
+      p In average, it takes a German 40 minutes to get to work every day. Why should it take you longer? Solve this 10-Question-Online-Quick-Creative-Test in exactly 40 minutes to impress our partners.
+      p Warning! Timer starts running once you progress.
+      p Countdown:
+      h2.countdown(class="red_text") 00:00:40:00
+      a(href="")
+        div.button(class="green_bg blue_text") Show Winners
+
+
+  div#portfolio_list(class="list")
+    ul.list_wrapper
+      a(href="#")
+        li
+          div.image(style="background-image:url('images/index.png')")
+          div.content
+            h4 SUSI SUNSHINE
+            p > View Portfolio
+      a(href="#")
+        li
+          div.image(style="background-image:url('images/index.png')")
+          div.content
+            h4 PENNY PENNROSE
+            p > View Portfolio
+      a(href="#")
+        li
+          div.image(style="background-image:url('images/index.png')")
+          div.content
+            h4 SIR_CLEE
+            p > View Portfolio
+
+
+  //- HAND IN YOUR CHALLENGE
+  div#your_brief(class="diagonal_box")
+    svg(class="diagonal_shape" viewBox="0 0 100 10" preserveAspectRatio="none")
+      path(d="M 0,0 L 100,0 100,4 0,10 z" style="fill: white;")
+    div.inner_wrapper
+      h3 Send us your Brief
+      p We are always open to fresh ideas. Even if it comes to ideas for ideas. If you have a challenge that is worth being challenged, just write us an email.
+  div.white_box
+    a(href="mailto:partner@creativityhasnoborders.com")
+      div.button(class="blue_bg") PARTNER@CHNB.COM

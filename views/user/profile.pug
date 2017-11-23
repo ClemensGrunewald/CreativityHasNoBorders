@@ -1,8 +1,9 @@
-extends layout.pug
+extends ../layout.pug
 
 
 //- Stylesheets exclusive for this subpage
 block styles
+  link(rel='stylesheet', href='/styles/helpers.css')
   link(rel='stylesheet', href='/styles/profile_modules.css')
 
 //- Stylesheets exclusive for this subpage
@@ -12,15 +13,20 @@ block scripts
 block content
 
   //- HEADER MODULE
-  div#header_module(class="centered")
-    img(class="profile_image" src="/images/logo-icon.png" alt="Creativity has no Borders - Logo")
+  div#header_module
     svg(class="diagonal_shape" viewBox="0 0 100 10" preserveAspectRatio="none")
-      path(d="M 0,10 L 100,10 100,0 0,5 z" style="fill: rgba(158,240,225,1);")
+      path(d="M 0,0 L 100,0 100,4 0,10 z" style="fill: white;")
+    img(class="avatar" src="/images/avatars/avatar1.png" alt="avatar")
 
   //- PROFILE MODULE
-  div#profile_module
-    h1.red_text=(data.profile.meta.gender && data.profile.meta.gender === "male" ? "mr": (data.profile.meta.gender && data.profile.meta.gender === "female" ? "mss" : "mx"))+" "+data.profile.username+"'s"
-    h1.red_text Portfolio.
+  div#profile_module(class="main_wrapper")
+
+    a(href="/u/"+data.profile.username+"/edit")
+      div.edit
+        i(class="fa fa-pencil" aria-hidden="true")
+        span edit
+
+    h1.red_text=(data.profile.meta.gender && data.profile.meta.gender === "male" ? "mr": (data.profile.meta.gender && data.profile.meta.gender === "female" ? "mss" : "mx"))+" "+data.profile.username
     span.pink_subline
 
     div.profile_info
@@ -29,6 +35,7 @@ block content
       p.professional=(data.profile.meta.status ? data.profile.meta.status: "career starter")
       p.bio=(data.profile.meta.description ? data.profile.meta.description: "~ no bio available ~")
 
+
     if(data.user.username === data.profile.username)
       a(href="#")
         div.button(class="pink_bg") UPLOAD NEW CASE
@@ -36,26 +43,26 @@ block content
       a(href="#")
         div.button(class="pink_bg") Contact #{data.profile.username}
 
-  //- PROJECT MODULE
-  div#project_module
-    ul.project_list
+
+  div#project_list(class="list")
+    ul.list_wrapper
       a(href="/u/"+data.profile.username+"/12345")
-        li.project_wrapper
-          div.img(style='background-image: url("https://www.w3schools.com/howto/img_fjords.jpg")')
-          div.project_info
-            h3 Circle & Heart
+        li
+          div.image(style="background-image:url('/images/index.png')")
+          div.content
+            h4 Concept of Town Halls
             p Brand Identity Project from hell yeah! What an example. This is amazing.
 
       a(href="/u/"+data.profile.username+"/12345")
-        li.project_wrapper
-          div.img(style='background-image: url("/images/img_not_available.jpg")')
-          div.project_info
-            h3 Circle & Heart
-            p Brand Identity Project from hell yeah! What an example. This is amazing.
+        li
+          div.image(style="background-image:url('/images/index.png')")
+          div.content
+            h4 Digital Network
+            p Brand Identity Project from hell yeah! What an example.
 
       a(href="/u/"+data.profile.username+"/12345")
-        li.project_wrapper
-          div.img(style='background-image: url("/images/index.png")')
-          div.project_info
-            h3 Circle & Heart
-            p Brand Identity Project from hell yeah! What an example. This is amazing.
+        li
+          div.image(style="background-image:url('/images/index.png')")
+          div.content
+            h4 Circle & Heart
+            p Brand Identity Project from hell yeah! What an example.

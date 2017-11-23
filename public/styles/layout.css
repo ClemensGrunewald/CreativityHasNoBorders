@@ -18,9 +18,17 @@ font-family: 'Roboto Condensed', sans-serif; // bold subhead, regular copy
 
 padding from sides:
 
+footer
+font-size 3.7vmin
 */
 ::-webkit-scrollbar {
     display: none;
+}
+
+input:focus {
+  outline-style:none;
+  box-shadow:none;
+  border-color:transparent;
 }
 
 
@@ -39,17 +47,37 @@ body {
   color:black;
 }
 
-h1, h2, h3 {
+h1, h2, h3, h4 {
   font-family: 'Josefin Sans', sans-serif;
   font-weight:bold;
   color: rgba(0,84,104,1);
 }
 
+h1 {
+  font-size:10vmin;
+  text-transform: uppercase;
+}
+
+h2 {
+  font-size:6vmin;
+  text-transform: uppercase;
+}
+
+h3 {
+  font-size:5vmin;
+  text-transform: uppercase;
+}
+
+h4 {
+  font-size:4vmin;
+  text-transform: uppercase;
+}
+
 p {
-  font-size: 18px;
+  font-size: 4vmin; /*18px */
   color: rgba(0,84,104,1);
-  letter-spacing:1.2px;
-  line-height:26px;
+  letter-spacing:1.1px;
+  line-height:5.2vmin; /*26px*/
 }
 
 a, a:hover {
@@ -102,7 +130,7 @@ nav .burgermenu:hover {
   right:0;
   left:0;
   bottom:0;
-  background:rgb(120,120,120);
+  background:rgba(0,84,104,1);
   z-index:100;
   opacity:1;
   padding:7.5px 15px;
@@ -147,7 +175,7 @@ nav .burgermenu:hover {
 
 #menu-overlay .menu-list .m1 li {
   color:rgba(255,255,255,0.85);
-  font-size:1.5em;
+  font-size:1.4em;
   font-weight:bold;
   line-height: 2.2em;
   letter-spacing: 0.25em;
@@ -182,6 +210,7 @@ footer {
 }
 
 footer a {
+  margin-top:-15px;
   color:rgba(0,84,104,1);
 }
 
@@ -194,15 +223,16 @@ footer .footer-logo img{
   display:block;
   margin:0 auto;
   margin-bottom:35px;
-  height:70px;
+  height:10vh;
+  max-height:100px;
   width:auto;
 }
 
 footer p {
   padding:0;
   margin:0 0 15px 0;
-  font-size:0.9em;
-  line-height: 1.4em;
+  font-size:3.7vmin;
+  line-height: 4.5vmin;
 }
 
 footer .copyright {
@@ -214,39 +244,84 @@ footer .copyright {
 
 
 /*- HELPERFUNCTIONS -*/
-.centered {
-  text-align: center;
-}
-
-.main_button_white {
+.pink_subline {
   position:relative;
   display:inline-block;
-  min-width:250px;
-  border:2px solid white;
-  color: white;
-  margin-top:10px;
-  margin-bottom:10px;
-  padding:15px 45px;
+  width:7.5%;
+  height:5px;
+  top:-10px;
+  margin-bottom:5px;
+  background:rgba(243,55,165,1)
 }
 
-.main_button_white:hover {
-  color:black;
-  background:white;
-}
-
-
-.main_button_black {
+.button {
   position:relative;
-  display:inline-block;
-  min-width:250px;
-  border:2px solid black;
-  color: black;
-  margin-top:10px;
-  margin-bottom:10px;
-  padding:15px 45px;
-}
-
-.main_button_black:hover {
+  display:block;
+  width:100%;
+  margin:30px auto 30px auto;
+  padding:10px;
+  text-align:center;
+  font-size:4vmin;
+  letter-spacing:0.9px;
   color:white;
-  background:black;
+}
+
+
+/* GRADIENTS */
+.red_gradient {
+  background:linear-gradient(rgba(255,255,255,0),rgba(255,76,50,1));
+}
+
+.pink_gradient {
+  background:linear-gradient(rgba(255,255,255,0), rgba(243,55,165,1));
+}
+
+.green_gradient {
+  background:linear-gradient(rgba(255,255,255,0), rgba(159,200,28,1));
+}
+
+.cyan_gradient {
+  background:linear-gradient(rgba(255,255,255,0), rgba(158,240,225,1));
+}
+
+/* BACKGROUNDS */
+.red_bg {
+  background:rgba(255,76,50,1);
+}
+
+.blue_bg {
+  background:rgba(0,84,104,1);
+}
+
+.pink_bg {
+  background:rgba(243,55,165,1);
+}
+
+.green_bg {
+  background:rgba(159,200,28,1);
+}
+
+.cyan_bg {
+  background:rgba(158,240,225,1);
+}
+
+/* TEXTCOLOR */
+.red_text{
+  color:rgba(255,76,50,1);
+}
+
+.blue_text{
+  color:rgba(0,84,104,1);
+}
+
+.pink_text{
+  color:rgba(243,55,165,1);
+}
+
+.green_text {
+  color:rgba(159,200,28,1);
+}
+
+.cyan_text {
+  color:rgba(158,240,225,1);
 }

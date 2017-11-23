@@ -1,0 +1,77 @@
+
+
+/*- Login Header Module -*/
+#header_module {
+  padding-bottom:30px;
+  margin-top:5vh;
+}
+
+
+#login_module {
+  position:relative;
+  width:100%;
+  min-height:300px;
+  padding:60px 15% 40px 15%;
+}
+
+#login_module form {
+  margin-top: 30px;
+  margin-bottom:10px;
+}
+
+#login_module .error {
+  position:relative;
+  width:100%;
+  padding:5px;
+  margin-bottom:-8px;
+  background:rgba(255,76,50,1);
+  color:white;
+  font-size:3vmin;
+  font-weight:bold;
+  text-align: center;
+}
+
+#login_module form input {
+  position:relative;
+  width:100%;
+  height:6vh;
+  padding:5px 10px;
+  background:rgba(0,84,104,1);
+  border:0;
+  margin:10px 0;
+  color:white;
+  font-size:3vmin;
+}
+
+#login_module form input[type="submit"] {
+  position:relative;
+  width:100%;
+  min-height:6vh;
+  padding:5px;
+  background:rgba(255,76,50,1);
+  border:0;
+  margin:20px 0 10px 0;
+  color:white;
+  font-size:4vmin;
+  font-weight:bold;
+}
+
+#login_module a {
+  display: block;
+  text-align: right;
+  text-decoration: underline;
+  color:rgba(0,84,104,1);
+  font-size:3vmin;
+  font-weight: bold;
+  line-height: 7vmin;
+}
+
+::placeholder {
+  color:white;
+}
+
+input:focus {
+  outline-style:none;
+  box-shadow:none;
+  border-color:transparent;
+}
