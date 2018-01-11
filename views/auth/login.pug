@@ -24,8 +24,8 @@ block content
 
     form(method="POST")
       if(error != null)
-        div.error error
-      input(type="text" name="email" placeholder="Email" value=(error != null ? data.email : '') required)
+        div.error=error
+      input(type="text" name="email" placeholder="E-mail" value=(error != null ? data.email : '') required)
       input(type="password" name="password" placeholder="Password" value="" title="Pas" required)
       input(type="submit" name="submit" value="Login")
 

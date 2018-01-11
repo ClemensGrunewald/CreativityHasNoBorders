@@ -1,0 +1,110 @@
+extends ../layout.pug
+
+mixin media(file)
+  if(file.typ === "image")
+    li(style="background-image:url('"+file.path+"')")
+  else
+    li
+      iframe(src=file.path webkitallowfullscreen mozallowfullscreen allowfullscreen)
+
+
+
+//- Stylesheets exclusive for this subpage
+block styles
+  link(rel='stylesheet', href='/styles/helpers.css')
+  link(rel='stylesheet', href='/styles/project.css')
+
+//- Stylesheets exclusive for this subpage
+block scripts
+
+//- Main content to extend the Layout template
+block content
+
+  //- MEDIA SLIDER
+  div#media-slider
+    ul(class="carousel")
+      each file in data.project.media
+        +media(file)
+
+
+  //- CONTENT
+  div.main_wrapper
+    div.content_wrapper
+
+      if(data.user.username === data.project.username)
+        a(href="/u/"+data.user.username+"/"+data.project.name+"/edit")
+          div.edit
+            i(class="fa fa-pencil" aria-hidden="true")
+            span edit
+
+      //- HEADLINE
+      h3 #{data.project.title}
+      p(class="creator")
+        | by
+        a(href="/u/"+data.project.username)
+          span(class="username") #{data.project.username}
+      p #{data.project.description}
+
+      div#commentSection
+        ul#social-wrapper
+          if(data.project.likes.indexOf(data.user.username) > -1)
+            li(class="social-item likeCount" style="background-image:url('/images/icons/like_on.png')") #{data.project.likes.length}
+          else
+            li(class="social-item likeCount") #{data.project.likes.length}
+          li(class="social-item commentCount") #{data.project.comments.length}
+        ul#comment-wrapper
+          each c in data.project.comments
+            li(class="comment") #{c.text}
+
+        form(id="newComment" method="POST")
+          input(type="text" name="myComment" placeholder="Your Comment" maxlength="140")
+          input(type="submit" name="submit" class="blue_bg" value="Submit")
+
+  //Script to control the slider
+  script.
+
+    var carousel;
+    $(document).ready(function () {
+      carousel = $(".carousel");
+      carousel.itemslide({
+          //carousel.next();
+          //disable_slide: true,
+        one_item: true //Set this for proper full screen navigation
+      });
+
+      $(window).resize(function () {
+        carousel.reload();
+      });
+
+      //- New Like Request
+      $('.likeCount').on('click', function(){
+        $.post(document.URL+"/like",function(data){
+          if(JSON.parse(data.success)){
+            var likes = parseInt($('.likeCount').html());
+            likes++;
+            $('.likeCount').html(likes);
+            $('.likeCount').css("background-image", "url('/images/icons/like_on.png')");
+          }
+        });
+      });
+
+      //- New Comment Request
+      $("#newComment").submit(function(e) {
+        e.preventDefault();
+        if($('input[name="myComment"]').val() != '' && $('input[name="myComment"]').val().length >=3){
+        $.post(document.URL+"/comment",{text: $('input[name="myComment"]').val()}, function(data){
+          if(JSON.parse(data.success)){
+            var comments = parseInt($('.commentCount').html());
+            comments++;
+            $('.commentCount').html(comments);
+            $('#comment-wrapper').append('<li class="comment">' + $('input[name="myComment"]').val() + '</li>');
+            $('input[name="myComment"]').val("");
+          }
+        });
+        }
+      });
+
+    });
+
+
+    //$('input[name="myComment"]').val()

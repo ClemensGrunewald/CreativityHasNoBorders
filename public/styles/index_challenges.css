@@ -1,9 +1,13 @@
 
 /* Challenge */
+.content_wrapper h4 {
+  font-weight: normal;
+}
+
 .content_wrapper .title {
   position:relative;
   font-size:6vmin;
-  font-weight:normal;
+  font-weight:bold;
   margin-top:-5px;
   margin-bottom:20px;
   letter-spacing: 0.5px;
@@ -29,15 +33,18 @@
   position:relative;
   width:42.5vw;
   min-height:80px;
-  margin: 2.5vw 2.5vw 2.5vw 5vw;
+  margin:2.5vw 0 0 0;
+  /* margin: 2.5vw 2.5vw 2.5vw 5vw;*/
   font-size:4vmin;
   text-align: left;
   vertical-align: top;
 }
 
 .list_wrapper a:nth-child(even) li {
-  margin: 2.5vw 5vw 2.5vw 2.5vw;
+  margin-left: 5vw;
+  /*margin: 2.5vw 5vw 2.5vw 2.5vw;*/
 }
+
 
 .list_wrapper li .image {
   position:relative;
@@ -73,10 +80,10 @@
 
 /* Have a Challenge for us? */
 #your_brief {
-  margin-top:-30px;
+  margin-top:-20px;
   background:rgba(159,200,28,1);
 }
 
 #your_brief .inner_wrapper {
-  margin-top:20px;
+  margin-top:0px;
 }

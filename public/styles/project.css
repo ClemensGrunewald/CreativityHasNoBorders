@@ -1,0 +1,147 @@
+
+#media-slider {
+  position:relative;
+  width:100vw;
+  height:40vh;
+  overflow: hidden;
+}
+
+#media-slider ul {
+    position: absolute;
+    height:100%;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    -webkit-transform-style: preserve-3d;
+    -ms-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+}
+
+#media-slider li {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  float: left;
+  width: 100vw;
+  height: 100%;
+  color: #FFF;
+  text-align: center;
+  background:black;
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+}
+
+#media-slider li iframe {
+  width:100vw;
+  height:100%;
+  border:0;
+}
+
+.edit {
+  position:absolute;
+  top:2vh;
+  right:2vh;
+  text-align: right;
+  color:lightgrey;
+  font-size:14px;
+  line-height:30px;
+  text-align: center;
+  cursor:pointer;
+}
+
+.creator {
+  margin-top:-7.5px;
+}
+
+.username {
+  margin:0 5px;
+}
+
+
+#social-wrapper {
+  position:relative;
+  width:100%;
+  height:25px;
+  margin-top:30px;
+  list-style:none;
+}
+
+#social-wrapper .social-item {
+  display:inline-block;
+  margin-right:5vmin;
+}
+
+.likeCount {
+  position:relative;
+  height:100%;
+  min-width:50px;
+  background-image:url('../images/icons/like_off.png');
+  background-repeat: no-repeat;
+  background-size:25px;
+  background-position:left;
+  padding-left:10vmin;
+  line-height:25px;
+  font-size:4vmin;
+  font-weight:200;
+  cursor:pointer;
+}
+
+.commentCount {
+  position:relative;
+  height:100%;
+  min-width:50px;
+  background-image:url('../images/icons/comments.png');
+  background-repeat: no-repeat;
+  background-size:25px;
+  background-position:left;
+  padding-left:32px;
+  line-height:25px;
+  font-size:4vmin;
+  font-weight:200;
+  cursor:pointer;
+}
+
+#comment-wrapper {
+  position:relative;
+  width:100%;
+  height:auto;
+  list-style: none;
+}
+
+#comment-wrapper .comment {
+  position:relative;
+  padding:10px;
+  color:white;
+  font-size:3.7vmin;
+  line-height: 4.2vmin;
+  background:lightgrey;
+  margin-bottom:5px;
+}
+
+#comment-wrapper li:nth-child(even){
+  background:rgba(255,76,50,1);
+}
+
+#comment-wrapper li:nth-child(odd){
+  background:rgba(0,84,104,1)
+}
+
+input[type="text"]{
+  height:auto;
+  margin-top:5px;
+  padding:5px 10px;
+  background: transparent;
+  border-bottom: 2px solid rgba(0,84,104,1);
+  color: rgba(0,84,104,1);
+  font-size:4vmin;
+}
+
+input[type="submit"]{
+  margin-top:5px;
+  margin-bottom:0;
+}
+
+::placeholder {
+  color: rgba(0,84,104,1);
+}

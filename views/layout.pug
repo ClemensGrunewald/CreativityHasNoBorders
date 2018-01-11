@@ -20,8 +20,9 @@ html
     block styles
 
     //- Pre-Scripts
-    script(src='/js/jquery-3.2.1.slim.min.js')
+    script(src='/js/jquery-3.2.1.min.js')
     script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js')
+    script(src="http://itemslide.github.io/dist/itemslide.min.js")
     script(src='https://use.fontawesome.com/289ece6f72.js')
     block scripts
 
@@ -48,7 +49,7 @@ html
             li Home
           a(href="/portfolios")
             li All Portfolios
-          if(data.user.isAuthenticated)
+          if(data.user && data.user.isAuthenticated)
             a(href="/u/"+data.user.username)
               li Your Portfolio
           else
@@ -62,7 +63,7 @@ html
             li Partners
 
         ul.m2
-          if(data.user.isAuthenticated)
+          if(data.user && data.user.isAuthenticated)
             a(href="/logout")
               li Logout
           else
@@ -91,8 +92,6 @@ html
 
       p
         | <strong>#CreativityHasnoBorders</strong>
-        span <br>
-          a(href="mailto:contact@chnb.com") <strong>contact@chnb.com</strong>
 
       div.copyright
       //-  Copyright 2017 creativityhasnoborders.com. All rights reserved.

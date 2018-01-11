@@ -1,6 +1,7 @@
 /* Top/Logo Module */
 #logo_module, #header_module {
   position:relative;
+  margin-top:5vh;
   padding-bottom:50px;
   background:rgba(158,240,225,1);
 }
@@ -19,8 +20,9 @@
   display:block;
   width:30vh;
   max-width:350px;
-  height:auto;
+  height:30vh;
   margin:-20vh auto 0 auto;
+  border-radius: 100%;
   z-index:1;
 }
 
@@ -29,23 +31,24 @@
 /* Wrapper for Everything */
 .main_wrapper {
   position:relative;
-  padding:0 10% 0px 10%;
+  padding:0 5% 0px 5%;
 }
 
 .content_wrapper {
   position:relative;
-  padding:40px 15px 0px 15px;
+  padding:40px 0px 30px 0px;
 }
 
 .content_wrapper p {
   font-size:4vmin;
   line-height: 5.2vmin;
+  letter-spacing:0.8px;
 }
 
 .inner_wrapper {
   position:relative;
   margin-top:-10vmax;
-  padding:0 10% 0 10%;
+  padding:0 5% 0 5%;
   text-align:left;
   z-index:1;
 }
@@ -55,10 +58,9 @@
   position:relative;
   display:inline-block;
   width:100%;
-  height:30vmax;
-  min-height: 300px;
+  min-height: 260px;
   margin-top:-130px;
-  padding:170px 10px 20px 10px;
+  padding:160px 5vw 20px 5vw;
 }
 
 .body_gradient_box {
@@ -119,6 +121,151 @@
 }
 
 
+
+
+
+.button {
+  position:relative;
+  display:block;
+  width:100%;
+  margin:10px auto 10px auto;
+  padding:10px;
+  text-align:center;
+  font-size:4vmin;
+  letter-spacing:0.9px;
+  color:white;
+}
+
+
+.button_icon {
+  position:relative;
+  display:block;
+  width:100%;
+  margin:10px auto 10px auto;
+  padding:10px;
+  text-align: left;
+  color:white;
+  font-size:4vmin;
+  font-weight:200;
+  letter-spacing:1.5px;
+}
+
+.button_icon:before {
+    content: '';
+    display: block;
+    background: url("../images/icons/trophy.png") no-repeat;
+    background-size:cover;
+    filter:invert(1);
+    width: 20px;
+    height: 20px;
+    float: right;
+    margin: 0 0px 0 6px;
+}
+
+
+
+.error {
+  position:relative;
+  width:100%;
+  padding:5px;
+  margin-bottom:-8px;
+  background:rgba(255,76,50,1);
+  color:white;
+  font-size:3vmin;
+  font-weight:bold;
+  text-align: center;
+}
+
+::placeholder {
+  color:rgba(255,255,255,0.5);
+}
+
+input[type="text"], input[type="password"] {
+  position:relative;
+  width:100%;
+  height:6vh;
+  padding:5px 10px;
+  background:rgba(0,84,104,1);
+  border:0;
+  border-radius: 0;
+  margin:5px 0;
+  color:white;
+  font-size:4vmin;
+}
+
+input[type="file"] {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+  display:none;
+	position: absolute;
+	z-index: -1;
+}
+
+input[type="file"] + label {
+    display: inline-block;
+    position:relative;
+    width:100%;
+    height:6vh;
+    padding:1.5vh 10px;
+    font-size: 4vmin;
+    color: rgba(255,255,255,0.5);
+    background: url("../images/icons/arrow_down.png") no-repeat rgba(0,84,104,1);
+    background-position:98%;
+    background-size:5vh;
+    cursor: pointer;
+}
+
+select {
+  position:relative;
+  width:100%;
+  height:6vh;
+  padding:5px 10px;
+  background:rgba(0,84,104,1);
+  border:0;
+  border-radius: 0;
+  margin:5px 0;
+  color:white;
+  font-size:4vmin;
+  background: url("../images/icons/arrow_down.png") no-repeat rgba(0,84,104,1);
+  background-position:98%;
+  background-size:5vh;
+  -webkit-appearance:none;
+  -moz-appearance:none;
+  appearance:none;
+}
+
+textarea {
+  position:relative;
+  width:100%;
+  padding:5px 10px;
+  background:rgba(0,84,104,1);
+  border:0;
+  border-radius: 0;
+  margin:5px 0;
+  color:white;
+  font-size:4vmin;
+  resize:none;
+  outline: none;
+
+}
+
+input[type="submit"] {
+  position:relative;
+  width:100%;
+  min-height:6vh;
+  padding:5px 10px;
+  border:0;
+  margin:20px 0 10px 0;
+  color:white;
+  font-size:4vmin;
+  font-weight:bold;
+}
+
+input:hover {
+  cursor:pointer;
+}
 
 
 

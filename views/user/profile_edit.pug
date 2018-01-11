@@ -1,0 +1,76 @@
+extends ../layout.pug
+
+
+//- Stylesheets exclusive for this subpage
+block styles
+  link(rel='stylesheet', href='/styles/helpers.css')
+  link(rel='stylesheet', href='/styles/user_profile.css')
+
+//- Stylesheets exclusive for this subpage
+block scripts
+
+//- Main content to extend the Layout template
+block content
+  form(id="profile-information" method="POST" encType="multipart/form-data")
+
+    //- HEADER MODULE
+    div#header_module
+      svg(class="diagonal_shape" viewBox="0 0 100 10" preserveAspectRatio="none")
+        path(d="M 0,0 L 100,0 100,4 0,10 z" style="fill: white;")
+      img(id="avatar" class="avatar" src=data.profile.meta.profile_img alt="avatar")
+      input(type="file" name="profile_img" accept="image/*" value="" onchange="loadFile(event)")
+
+    //- PROFILE MODULE
+    div#profile_module(class="main_wrapper")
+
+
+      h1.red_text=(data.profile.meta.gender && data.profile.meta.gender === "male" ? "mr": (data.profile.meta.gender && data.profile.meta.gender === "female" ? "mss" : "mx"))+" "+data.profile.username
+      span.pink_subline
+
+      div.profile_info(style="font-size:0;")
+
+          h4 Public Profile
+          select(name="age" style="display:inline-block;width:49.5%;margin-right:1%;")
+            - for(var i = 16; i < 40; i++)
+                option(value=i selected=(data.profile.meta.age && data.profile.meta.age === i ? "selected": false)) #{i} years old
+          select(name="gender" style="display:inline-block;width:49.5%;")
+            option(value="unknown" selected=(data.profile.meta.gender && data.profile.meta.gender === "unknown" ? "selected": false)) unknown
+            option(value="male" selected=(data.profile.meta.gender && data.profile.meta.gender === "male" ? "selected": false)) male
+            option(value="female" selected=(data.profile.meta.gender && data.profile.meta.gender === "female" ? "selected": false)) female
+          select(name="status")
+            option(value="career starter" selected=(data.profile.meta.status && data.profile.meta.status === "career starter" ? "selected" : false)) career starter
+            option(value="experienced" selected=(data.profile.meta.status && data.profile.meta.status === "experienced" ? "selected" : false)) experienced
+            option(value="professional" selected=(data.profile.meta.status && data.profile.meta.status === "professional" ? "selected" : false)) professional
+          textarea(name="description" maxlength="140" rows="4" placeholder="Put your short bio here") #{(data.profile.meta.description ? data.profile.meta.description : "")}
+
+          h4 Personal Information
+          input(style="display:inline-block;width:49.5%;margin-right:1%;" type="text" name="firstname" placeholder="First Name" value=(data.profile.name.first ? data.profile.name.first : ""))
+          input(style="display:inline-block;width:49.5%;" type="text" name="lastname" placeholder="Lirst Name" value=(data.profile.name.last ? data.profile.name.last : ""))
+          input(type="text" name="email" placeholder="E-mail Address" value=(data.profile.email ? data.profile.email : ""))
+
+          h4 Social Links
+          input(type="text" name="facebook" placeholder="https://facebook.com/..." value=(data.profile.meta.facebook ? data.profile.meta.facebook : ""))
+          input(type="text" name="linkedin" placeholder="https://linkedin.com/..." value=(data.profile.meta.linkedin ? data.profile.meta.linkedin : ""))
+          input(type="text" name="instagram" placeholder="https://instagram.com/..." value=(data.profile.meta.instagram ? data.profile.meta.instagram : ""))
+          input(type="text" name="twitter" placeholder="https://twitter.com/..." value=(data.profile.meta.twitter? data.profile.meta.twitter : ""))
+          input(type="text" name="website" placeholder="https://..." value=(data.profile.meta.website? data.profile.meta.website : ""))
+
+          h4 Password
+            span(style="font-size:1.3vh")  (optional)
+          input(type="password" name="password" placeholder="Password" pattern=".{8,}")
+          input(type="password" name="confirm_password" placeholder="Retype Password" pattern=".{8,}")
+
+          input(style="margin-bottom:30px;" type="submit" class="pink_bg" name="submit" value="Submit")
+
+  script.
+
+    //click label to trigger input
+    $('#avatar').on('click', function(){
+      $('input[name="profile_img"]').click();
+    })
+
+    //Function to preview profile image
+    var loadFile = function(event) {
+      var output = document.getElementById('avatar');
+      output.src = URL.createObjectURL(event.target.files[0]);
+    };

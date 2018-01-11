@@ -2,6 +2,15 @@ extends ../layout.pug
 include ../modules/mixins_index.pug
 
 
+mixin portfolio(username, profile_img)
+  a(href="/u/"+username)
+    li
+      div.image(style="background-image:url('"+profile_img+"')")
+      div.content
+        h4=username
+        p > View Portfolio
+
+
 //- Stylesheets exclusive for this subpage
 block styles
   link(rel='stylesheet', href='/styles/helpers.css')
@@ -22,7 +31,7 @@ block content
       h1(class="red_text")= data.modules[0].title.substring(0, data.modules[0].title.indexOf(" "))
       h1(class="red_text")= data.modules[0].title.substring(data.modules[0].title.indexOf(" ")+1, data.modules[0].title.length)
       span.pink_subline
-    div.content-wrapper
+    div.content_wrapper
       p
         | This is where the magic happens. See the creative solutions for all our challenges. Feel free to ask for contact details about anyone you are especially interested in, so we can connect you.
         | <br> And most of all: Enjoy!
@@ -30,23 +39,5 @@ block content
   //- PORTFOLIO LIST
   div#portfolio_list(class="list")
     ul.list_wrapper
-      a(href="#")
-        li
-          div.image(style="background-image:url('images/index.png')")
-          div.content
-            h4 SUSI SUNSHINE
-            p > View Portfolio
-
-      a(href="#")
-        li
-          div.image(style="background-image:url('images/index.png')")
-          div.content
-            h4 PENNY PENNROSE
-            p > View Portfolio
-
-      a(href="#")
-        li
-          div.image(style="background-image:url('images/index.png')")
-          div.content
-            h4 SIR_CLEE
-            p > View Portfolio
+      each p in data.modules[0].profiles
+        +portfolio(p.username, p.meta.profile_img)
