@@ -9,25 +9,31 @@ mongoose.connect('mongodb://localhost/'+config.mongodb, {useMongoClient: true});
 
 //- Create a Challenge Schema
 var projectSchema = new Schema({
-  id: {type: Number, required: true, unique: true},
-  challenge_id: {type: Number, required:true},
-  user_id: {type: String, required: true},
+  name: {type:String, required: true, unique:true},
+  challenge_name: {type: String, required:true},
+  username: {type: String, required: true},
   title: {type: String, required: true},
   description: {type: String, default: "no description available"},
-  meta: {
-    images: Array,
-    videos: Array,
-    documents: Array
-  },
+  media: {type: Array, default: []},
+  comments: {type: Array, default: []},
+  likes: {type: Array, default:[]},
+  isWinner: {type: Boolean, default: false},
   created_at: {type: Date, default: new Date()},
   updated_at: Date,
-  isApproved: {type: Boolean, required:true}
+  isActive: {type: Boolean, default:true},
+  isBlocked: {type: Boolean, default:false},
+  reportedBy:Array,
+  thumbnail: String,
+  profile_img: String
 });
 
 //- Password Hashing before saving
 projectSchema.pre('save', function(next){
   var project = this;
   project.updated_at = new Date();
+
+  var err = new Error('something went wrong');
+  next();
 });
 
 

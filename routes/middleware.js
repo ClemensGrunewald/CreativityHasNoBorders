@@ -11,7 +11,7 @@ var middleware = {
 
       //- Find the user
       User.findOne({ username: req.session.user.username, email: req.session.user.email, access_token: req.session.user.token, access_token_expires: { $gt: Date.now() } }, function(err, user) {
-        if(!user) {
+        if(!user || user.isBlocked === true || user.isActive === false) {
 
           //- Make Session invalid
           req.session = null;

@@ -11,7 +11,6 @@ mongoose.connect('mongodb://localhost/'+config.mongodb, {useMongoClient: true});
 var challengeSchema = new Schema({
   name: {type: String, required: true, unique: true},
   title: {type: String, required: true},
-  cover: {type: String, default:''},
   description: {type: String, default: "no description available"},
   brief: {type: String, default:''},
   author: {type: String, required: true},
@@ -19,15 +18,12 @@ var challengeSchema = new Schema({
       enabled: {type: Boolean, default: false},
       countdown: {type: Number, default: 0}
   },
-  meta: {
-    images: Array,
-    videos: Array,
-    documents: Array
-  },
+  participants: Array,
   created_at: {type: Date, default: new Date()},
   updated_at: Date,
   active_until: Date, //{type: Date, default: new Date(Date.now()+4*7*24*60*60*1000)}
-  isActive: {type: Boolean, default: true}
+  isActive: {type: Boolean, default: true},
+  winner: Array
 });
 
 //- Update the updated_at parameter

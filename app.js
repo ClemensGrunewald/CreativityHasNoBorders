@@ -4,6 +4,7 @@ var pug               = require('pug');
 var cookieSession     = require('cookie-session');
 var fileUpload        = require('express-fileupload');
 var expressSanitizer  = require('express-sanitizer');
+var validator         = require('validator');
 const express         = require('express');
 const app             = express();
 
@@ -23,7 +24,7 @@ app.use(cookieSession({
   httpOnly: true,
   maxAge: 30*24*60*60*1000
 }))
-app.use(fileUpload({preserveExtension: true }));
+app.use(fileUpload({preserveExtension: true}));
 
 //- Require Routes
 var routes = {};

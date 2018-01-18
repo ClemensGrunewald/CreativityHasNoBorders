@@ -24,12 +24,16 @@ var userSchema = new Schema({
   isActive: { type: Boolean, default: false },
   isBlocked: { type: Boolean, default: false },
   isAgencyUser: { type: Boolean, default: false },
+  agencyName: String,
   access_token: String,
   access_token_expires: Date,
   reset_password_token: String,
   reset_password_token_expires: Date,
   meta: {
-    profile_img: String,
+    profile_img: {type: String, default: function() {
+            var rnd = Math.floor((Math.random() * 7) + 1);
+            return "/images/avatars/avatar"+rnd+".png";
+        }},
     cover_img: String,
     title: String,
     status: String,
@@ -43,6 +47,7 @@ var userSchema = new Schema({
     instagram: String,
     website: String,
   },
+  challenges: Array,
   created_at: Date,
   updated_at: Date
 });

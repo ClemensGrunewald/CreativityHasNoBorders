@@ -10,34 +10,13 @@ var controller = require('../controllers/admin');
 //- Render Routes
 router.get('/', middleware.isAuthenticated, controller.render_admin);
 
-//- Render User Table
-router.get('/users', middleware.isAuthenticated, controller.render_admin_users);
+router.get('/new', middleware.isAuthenticated, controller.render_challenge_new);
 
-//- Method to block or unblock a given user
-router.get('/user/:username/block', middleware.isAuthenticated, controller.render_admin_users_block);
+router.post('/new', middleware.isAuthenticated, controller.process_challenge_new);
 
-//- Methods to access and edit userdata (show user)
-router.get('/user/:username/edit', middleware.isAuthenticated, controller.render_admin_users_edit);
+router.get('/:challengeId/edit', middleware.isAuthenticated, controller.render_challenge_edit);
 
-//- Methods to access and edit userdata (process)
-router.post('/user/:username/edit', middleware.isAuthenticated, controller.process_admin_users_edit);
-
-
-//- Render Challenges Tab
-router.get('/challenges', middleware.isAuthenticated, controller.render_admin_challenges);
-
-//- Method to create a new Challenge
-router.get('/challenges/new', middleware.isAuthenticated, controller.render_admin_challenges_new);
-
-//- Method to process the data of a new Challenge
-router.post('/challenges/new', middleware.isAuthenticated, controller.process_admin_challenges_new);
-
-//- Method to edit an existing challenge
-router.get('/challenges/:challenge/edit', middleware.isAuthenticated, controller.render_admin_challenges_edit);
-
-//- Method to process the data of an edited challenge
-router.post('/challenges/:challenge/edit', middleware.isAuthenticated, controller.process_admin_challenges_edit);
-
+router.post('/:challengeId/edit', middleware.isAuthenticated, controller.process_challenge_edit);
 
 //- Export routes
 module.exports = router;
