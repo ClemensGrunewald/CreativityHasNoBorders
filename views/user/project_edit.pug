@@ -1,0 +1,131 @@
+extends ../layout.pug
+
+
+//- Stylesheets exclusive for this subpage
+block styles
+  link(rel='stylesheet', href='/styles/helpers.css')
+  link(rel='stylesheet', href='/styles/project.css')
+
+//- Stylesheets exclusive for this subpage
+block scripts
+
+//- Main content to extend the Layout template
+block content
+
+
+  //- CONTENT
+  div.main_wrapper
+    div.content_wrapper
+
+      a(href="/u/"+data.project.username+"/"+data.project.name)
+        h2.blue_text=data.project.title
+      span.pink_subline
+
+      form(id="editForm" method="POST" encType="multipart/form-data")
+
+        h4 Project Information
+        input(type="text" name="title" placeholder="Your Title" value=(data.project.title ? data.project.title : ""))
+        textarea(name="description" placeholder="140 letters about your project*" rows="4" maxlength="140")=(data.project.description ? data.project.description : "")
+
+
+        h4 Order Media
+        ul#mediaorder(style="list-style:none")
+
+          if(data.project.media.length >= 1)
+            - data.project.media.sort(function(a, b){return a.order > b.order;});
+            each m in data.project.media
+              if(m.isActive)
+                li(data-name=m.name data-order=m.order)
+                  div.controls
+                    div.moveUp
+                    div.delete
+                  div.content
+                    if(m.type === "image")
+                      div.img(style="background-image:url('"+m.path+"')")
+                    if(m.type === "video")
+                      div.img >> Video <<
+          else
+            each m in data.project.media
+              if(m.isActive)
+                li #{m.name.substring(0,5)}
+
+        h4 Upload Media
+        input(type="file" id="casefiles" name="file" accept="image/jpeg,image/png" data-multiple-caption="{count} files selected" multiple)
+        label(for="casefiles")
+          span Select file(s) (max. 5MB)*
+        input(type="text" name="videolink" placeholder="Vimeo or Youtube Video Link (optional)")
+
+        input(type="hidden" name="order" value="")
+        input(type="submit" name="delete" value="DELETE" class="red_bg" style="display:inline-block;width:25%;")
+        input(type="submit" name="submit" value="SAVE" class="green_bg" style="display:inline-block;width:73%;")
+
+  //Script to control the order function
+  script.
+    $(document).ready(function(){
+      orderMedia();
+
+      //Moveup List item on click!
+      $('.moveUp').on('click', function(){
+        before = $(this).parent().parent().prev();
+        if(before){
+          before.attr("data-order")+1;
+          prevOrder = parseInt(before.attr("data-order"))+1;
+          before.attr("data-order", prevOrder);
+
+          $(this).parent().parent().attr("data-order")-1;
+          currOrder =  parseInt($(this).parent().parent().attr("data-order"))-1;
+          $(this).parent().parent().attr("data-order", currOrder);
+
+          $(this).parent().parent().insertBefore(before);
+          orderMedia();
+        }
+      });
+
+      function orderMedia(){
+        var array = [];
+        $("#mediaorder li").each(function(){
+          var obj = {};
+          obj.order = $(this).attr("data-order");
+          obj.name = $(this).attr("data-name");
+          array.push(obj);
+
+          if(array.length === $("#mediaorder li").length){
+            $('input[name="order"]').val(JSON.stringify(array));
+            console.log(array);
+          }
+        });
+      }
+
+      //- Disable the Media object and hide it
+      $('.delete').on('click', function(){
+        $(this).parent().parent().attr("data-order", -1);
+        $(this).parent().parent().hide();
+        orderMedia();
+      });
+
+
+      //- upload Media
+      var inputs = document.querySelectorAll( '#casefiles' );
+      Array.prototype.forEach.call( inputs, function( input ){
+        var label	 = input.nextElementSibling,
+        labelVal = label.innerHTML;
+
+        input.addEventListener( 'change', function( e ){
+          var fileName = '';
+          if( this.files && this.files.length > 1 ) {
+            fileName = ( this.getAttribute( 'data-multiple-caption' ) || '' ).replace( '{count}', this.files.length );
+          } else {
+            fileName = e.target.value.split( '\\' ).pop();
+          }
+
+          if( fileName ){
+            label.querySelector( 'span' ).innerHTML = fileName;
+            label.style.color = "rgba(255,255,255,1)";
+          } else {
+            label.innerHTML = labelVal;
+          }
+        });
+      });
+
+
+    })

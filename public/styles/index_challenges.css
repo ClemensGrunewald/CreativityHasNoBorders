@@ -26,6 +26,14 @@
   margin-top:-15px;
 }
 
+.divider {
+  position:relative;
+  width:100%;
+  height:200px;
+  background:url('../images/challenges_divider.png');
+  background-repeat: no-repeat;
+  background-size:contain;
+}
 
 /* Challange List */
 .list_wrapper a li {
@@ -80,7 +88,7 @@
 
 /* Have a Challenge for us? */
 #your_brief {
-  margin-top:-20px;
+  margin-top:10px;
   background:rgba(159,200,28,1);
 }
 

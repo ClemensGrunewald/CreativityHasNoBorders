@@ -1,0 +1,114 @@
+body {
+  background: rgb(233,235,238);
+}
+
+
+#newsfeed {
+  position:relative;
+  margin-top:15px;
+  list-style: none;
+}
+
+#newsfeed .project {
+  margin:1vh 0;
+  padding:10px;
+  border-radius:3px;
+  border:1px solid rgb(221, 223,226);
+  background:white;
+}
+
+#newsfeed .project .head {
+  position:relative;
+}
+
+#newsfeed li .profile_img {
+  display:inline-block;
+  position:relative;
+  width:15vmin;
+  height:15vmin;
+  border-radius: 100%;
+  border:2px solid rgba(158,240,225,1);
+  background-image:url('../images/avatars/avatar2.png');
+  background-repeat:no-repeat;
+  background-size:cover;
+  background-position:center;
+  vertical-align: middle;
+}
+
+#newsfeed li .profile {
+  display:inline-block;
+  margin-left:10px;
+  vertical-align: middle;
+}
+
+#newsfeed li .profile .username {
+  display:block;
+  font-size:5vmin;
+  font-weight:600;
+  color:rgba(0,84,104,1);
+}
+
+#newsfeed li .profile .posted {
+  display:block;
+  font-size:3vmin;
+  margin-top:-1.5vmin;
+  color:rgb(144, 146,148);
+}
+
+#newsfeed li .content {
+  position:relative;
+  margin-top:10px;
+}
+
+#newsfeed li .content .media {
+  position:relative;
+  width:100%;
+  height: 30vh;
+  background-image:url('../images/index.png');
+  background-color:lightgrey;
+  background-repeat:no-repeat;
+  background-size:cover;
+  background-position:center;
+
+}
+
+
+.interaction {
+  position:relative;
+  width:100%;
+  height:6vmin;
+  list-style:none;
+  margin:5px 0 2.5px 0;
+}
+
+.interaction .social-item {
+  display:inline-block;
+  position:relative;
+  height:100%;
+  min-width:30px;
+  margin-right:5vmin;
+}
+
+.likeCount {
+  background-image:url('../images/icons/like_off.png');
+  background-repeat: no-repeat;
+  background-size:contain;
+  background-position:left;
+  padding-left:8vmin;
+  line-height:6vmin;
+  font-size:4vmin;
+  font-weight:200;
+  cursor:pointer;
+}
+
+.commentCount {
+  background-image:url('../images/icons/comments.png');
+  background-repeat: no-repeat;
+  background-size:contain;
+  background-position:left;
+  padding-left:8vmin;
+  line-height:6vmin;
+  font-size:4vmin;
+  font-weight:200;
+  cursor:pointer;
+}

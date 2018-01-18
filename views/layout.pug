@@ -15,23 +15,23 @@ html
 
     //- Stylesheets
     link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Josefin+Sans:700|Roboto+Condensed:400,700')
-    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css')
+    link(rel='stylesheet', href='/styles/bootstrap.min.css')
     link(rel='stylesheet', href='/styles/layout.css')
     block styles
 
     //- Pre-Scripts
     script(src='/js/jquery-3.2.1.min.js')
-    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js')
-    script(src="http://itemslide.github.io/dist/itemslide.min.js")
+    script(src="/js/popper.js")
+    script(src='/js/bootstrap.min.js')
+    script(src="/js/itemslide.min.js")
     script(src='https://use.fontawesome.com/289ece6f72.js')
     block scripts
-
 
   body
     //- Navbar
     nav(role="navigation" class="navbar navbar-light fixed-top")
       a(class="navbar-brand" href="/")
-        img(src="/images/logo-icon.png" width="auto" height="45" style="clear:both" alt="logo | creativityhasnoborders")
+        img(src="/images/logo-icon.png" width="auto" height="45" style="clear:both;" alt="logo | creativityhasnoborders")
       div.burgermenu
         span.menu-text Menu
         i(class="burgermenu-icon fa fa-bars" aria-hidden="true")
@@ -61,6 +61,9 @@ html
             li About
           a(href="/partners")
             li Partners
+          if(data.user && (data.user.isAdmin || data.user.isMod || data.user.isAgencyUser))
+            a(href="/admin")
+              li Moderation
 
         ul.m2
           if(data.user && data.user.isAuthenticated)
@@ -79,9 +82,8 @@ html
 
 
 
-
     //- Footer
-    footer
+    footer#footer
       a(class="footer-logo" href="/")
         img(src="/images/logo.png" alt="logo | creativityhasnoborders")
 

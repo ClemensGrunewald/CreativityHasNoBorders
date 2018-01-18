@@ -23,9 +23,42 @@
   height:30vh;
   margin:-20vh auto 0 auto;
   border-radius: 100%;
+  background-repeat:no-repeat;
+  background-size:cover;
+  background-position:center;
   z-index:1;
 }
 
+
+/* Status: blocked, etc */
+.blocked {
+  position:absolute;
+  top: 0;
+  right:10px;
+  margin-top:-3vh;
+  padding:2.5px 5px;
+  color:white;
+  font-size:3vmin;
+  background:rgb(255,76,50);
+  border-radius:5px;
+  z-index:1;
+}
+
+.report {
+  position:absolute;
+  top: 2.5vw;
+  right:-2.5vw;
+  height:8vmin;
+  width:8vmin;
+  background-image:url('../images/icons/report.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  border-radius:100%;
+  filter: opacity(0.2);
+  z-index:1;
+  cursor:pointer;
+}
 
 
 /* Wrapper for Everything */
@@ -120,7 +153,9 @@
   text-align: center;
 }
 
-
+.ghost {
+  opacity: .4;
+}
 
 
 
@@ -198,7 +233,7 @@ input[type="file"] {
 	height: 0.1px;
 	opacity: 0;
 	overflow: hidden;
-  display:none;
+  opacity:0;
 	position: absolute;
 	z-index: -1;
 }

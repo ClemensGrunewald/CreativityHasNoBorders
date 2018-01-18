@@ -1,76 +1,87 @@
-extends admin.pug
+extends ../layout.pug
 
 
-//- MIXINS
+//- Stylesheets exclusive for this subpage
+block styles
+  link(rel='stylesheet', href='/styles/helpers.css')
+  link(rel='stylesheet', href='/styles/admin.css')
 
+//- Stylesheets exclusive for this subpage
+block scripts
 
 
 block content
 
-  //- Sidebar
-  div#sidebar
-    ul
-      a(href="/admin/users")
-        li Users
-      a(href="/admin/challenges")
-        li.active Challenges
-      a(href="/admin/projects")
-        li Projects
-      li.span |
-      a(href="/admin/pages/index")
-        li Index
-      a(href="/admin/pages/about-us")
-        li About Us
-      a(href="/admin/pages/challenges")
-        li Challenges
-      a(href="/admin/pages/partners")
-        li Partners
+  div.main_wrapper
+    div.content_wrapper
+
+      h2 New Challenge
+      if(error)
+        div.error=error
+      form(method="POST" encType="multipart/form-data")
+        input(type="text" name ="title" placeholder="Challenge Title*" maxlength="35" required)
+        input(type="text" name ="author" placeholder="Author Agency*" required)
+
+        h4 More Details
+
+        input(type="checkbox" name="shortModeSwitch")
+        label(class="checkbox_label" for="shortModeSwitch") Countdown?
+
+        input(type="text" name="countdown" placeholder="XX (minutes)")
+        input(type="text" name="active_until" placeholder="Active Until: DD.MM.YYYY*" pattern="(0[1-9]|1[0-9]|2[0-9]|3[01]).(0[1-9]|1[012]).[0-9]{4}" required)
+        input(type="file" id="brief" name="brief" accept="application/pdf" data-multiple-caption="{count} files selected" required)
+        label(for="brief")
+          span Upload Brief (.pdf only)*
+        textarea(type="text" name="description" rows="3" placeholder="A short description of the challenge, that needs to be solved.*" required)
+
+        input(type="checkbox" name="active" checked)
+        label(class="checkbox_label" for="active") Activate?
+
+        input(class="pink_bg" type="submit" name="submit" value="CREATE")
+
+  script.
+    $(document).ready(function(){
+
+      //- Show Countdown input if shortmode is/gets activated
+      if($('input[name="shortModeSwitch"]').is( ":checked" )){
+        $('input[name="countdown"]').show();
+      } else {
+        $('input[name="countdown"]').hide();
+      }
+
+      $('input[name="shortModeSwitch"]').change(function(){
+        if($(this).is( ":checked" )){
+          $('input[name="countdown"]').show();
+          $('input[name="countdown"]').prop('required',true);
+        } else {
+          $('input[name="countdown"]').hide();
+          $('input[name="countdown"]').prop('required',false);
+        }
+      })
+
+      //- upload Media
+      var inputs = document.querySelectorAll( '#brief' );
+      Array.prototype.forEach.call( inputs, function( input ){
+        var label	 = input.nextElementSibling,
+        labelVal = label.innerHTML;
+
+        input.addEventListener( 'change', function( e ){
+          var fileName = '';
+          if( this.files && this.files.length > 1 ) {
+            fileName = ( this.getAttribute( 'data-multiple-caption' ) || '' ).replace( '{count}', this.files.length );
+          } else {
+            fileName = e.target.value.split( '\\' ).pop();
+          }
+
+          if( fileName ){
+            label.querySelector( 'span' ).innerHTML = fileName;
+            label.style.color = "rgba(255,255,255,1)";
+          } else {
+            label.innerHTML = labelVal;
+          }
+        });
+      });
 
 
 
-
-  div.content-wrapper
-    if error
-      div.error_alert
-        i(class="fa fa-exclamation-triangle")
-        span.err #{error}
-
-    div#new_challenge
-
-      form(method="POST", action="/admin/challenges/new", encType="multipart/form-data")
-
-        label(class="uploadContainer" for="cover")
-          if data && data.cover
-            img(src="/images/index.png")
-          div.caption
-            i(class="fa fa-cloud-upload" aria-hidden="true")
-            span Cover Image
-            input(type="file" name="cover" value="")
-
-        input(type="text", name="title", value=(data && data.input.title ? data.input.title : ''), placeholder="Challenge Title*")
-        input(type="text", name="author", value=(data && data.input.author ? data.input.author : ''), placeholder="Author*")
-
-        h1= "Details"
-
-        label(for="switch") Short Mode:
-          input(type="checkbox", name="switch", checked=(data && data.input.switch ? true : false))
-
-          label(for="countdown") Timer:
-            input(type="text", name="countdown", value=(data && data.input.countdown ? data.input.countdown : ''), placeholder="0 min")
-
-        label(for="active_until") Active Until*:
-          input(type="text", name="active_until", value=(data && data.input.active_until ? data.input.active_until : ''), placeholder="e.g. 27.12.2017")
-
-        label(for="brief") Brief:
-          input(type="file" name="brief")
-
-        label(for="description") Description*:
-          textarea(type="text", name="description", rows="2",placeholder="A short description of the challenge, that needs to be solved.") #{data && data.input.description ? data.input.description : ''}
-
-
-        h1= "Settings"
-
-        label(for="active") Active:
-          input(type="checkbox" name="active" checked=(data && data.input.active ? true : false))
-
-        input(type="submit" name="submit" value="Create")
+    })

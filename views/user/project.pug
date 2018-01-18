@@ -1,13 +1,19 @@
 extends ../layout.pug
 
-mixin media(file)
-  if(file.typ === "image")
-    li(style="background-image:url('"+file.path+"')")
+mixin media(file, mediaCounter)
+  if(file.type === "image")
+    li(data-name=file.name style="background-image:url('"+file.path+"')")
+      if(parseInt(file.order) > 0)
+        div(class="video_slider video_prev")
+      if(parseInt(file.order) < mediaCounter-1)
+        div(class="video_slider video_next")
   else
     li
-      iframe(src=file.path webkitallowfullscreen mozallowfullscreen allowfullscreen)
-
-
+      iframe(data-name=file.name src=file.path webkitallowfullscreen mozallowfullscreen allowfullscreen)
+      if(parseInt(file.order) > 0)
+        div(class="video_slider video_prev")
+      if(parseInt(file.order) < mediaCounter-1)
+        div(class="video_slider video_next")
 
 //- Stylesheets exclusive for this subpage
 block styles
@@ -20,12 +26,39 @@ block scripts
 //- Main content to extend the Layout template
 block content
 
+  //- MOD TOOLBAR
+  //&& (!data.profile.isAdmin && !data.profile.isMod)
+  if((data.user.isAdmin || data.user.isMod) )
+    div#mod-toolbar(data-name=data.project.name)
+      a(href="/admin")
+        span Moderation Toolbar
+      div.mod-controls
+        a(href="/u/"+data.project.username+"/"+data.project.name+"/edit")
+          div.mod-edit(class="controls")
+            span edit
+        if(data.project.isBlocked)
+          a(href="/u/"+data.project.username+"/"+data.project.name+"/unblock")
+            div.mod-unblock(class="controls")
+              span unblock
+        a(href="/u/"+data.project.username+"/"+data.project.name+"/delete")
+          div.mod-del(class="controls")
+            span delete
+
+
   //- MEDIA SLIDER
   div#media-slider
     ul(class="carousel")
+      - data.project.media.sort(function(a, b){return a.order > b.order;});
+      - var mediaCounter = 0;
       each file in data.project.media
-        +media(file)
+        if(file.isActive && file.order != -1)
+          - mediaCounter++;
 
+      each file in data.project.media
+        if(file.isActive && file.order != -1)
+          +media(file, mediaCounter)
+    if(data.project.isBlocked)
+      div.blocked(style="margin-top:1vh") reported
 
   //- CONTENT
   div.main_wrapper
@@ -36,6 +69,9 @@ block content
           div.edit
             i(class="fa fa-pencil" aria-hidden="true")
             span edit
+      else if(data.user.isAuthenticated && data.user.username != data.project.username)
+        a(href="/u/"+data.project.username+"/"+data.project.name+"/report")
+          div.report
 
       //- HEADLINE
       h3 #{data.project.title}
@@ -54,11 +90,17 @@ block content
           li(class="social-item commentCount") #{data.project.comments.length}
         ul#comment-wrapper
           each c in data.project.comments
-            li(class="comment") #{c.text}
+            if(c.isActive)
+              li(class="comment")
+                if(data.user.isAdmin || data.user.isMod || data.project.username === data.user.username)
+                  a(href="/u/"+data.user.username+"/"+data.project.name+"/"+c.id+"/delete")
+                    div.mod-comment-control
+                span #{c.text}
 
-        form(id="newComment" method="POST")
-          input(type="text" name="myComment" placeholder="Your Comment" maxlength="140")
-          input(type="submit" name="submit" class="blue_bg" value="Submit")
+        if(data.user.isAuthenticated)
+          form(id="newComment" method="POST")
+            input(type="text" name="myComment" placeholder="Your Comment" maxlength="140")
+            input(type="submit" name="submit" class="blue_bg" value="Submit")
 
   //Script to control the slider
   script.
@@ -75,6 +117,18 @@ block content
       $(window).resize(function () {
         carousel.reload();
       });
+
+
+      //- Prev Slide
+      $('.video_prev').on('click', function(){
+        carousel.previous();
+      })
+
+      //- Next Slide
+      $('.video_next').on('click', function(){
+        carousel.next();
+      })
+
 
       //- New Like Request
       $('.likeCount').on('click', function(){

@@ -14,7 +14,8 @@ block content
   div#header_module
     svg(class="diagonal_shape" viewBox="0 0 100 10" preserveAspectRatio="none")
       path(d="M 0,0 L 100,0 100,4 0,10 z" style="fill: white;")
-    img(class="avatar" src="/images/avatars/avatar1.png" alt="avatar")
+    - var rnd = Math.floor((Math.random()*7)+1)
+    div(class="avatar" style="background-image:url('/images/avatars/avatar"+rnd+".png')")
 
   div.red_gradient
     div.main_wrapper
@@ -39,10 +40,10 @@ block content
 
           input(type="text" name="title" placeholder="Your Projects title*" value=(data.modules[0].userdata.title ? data.modules[0].userdata.title : "") maxlength="35")
           textarea(name="description" placeholder="140 letters about your project*" rows="4" maxlength="140")=(data.modules[0].userdata.description ? data.modules[0].userdata.description : "")
-          input(type="file" id="casefiles" name="file" data-multiple-caption="{count} files selected" multiple required)
+          input(type="file" id="casefiles" name="file" accept="image/jpeg,image/png" data-multiple-caption="{count} files selected" multiple required)
           label(for="casefiles")
             span Select file(s) (max. 5MB)*
-          input(type="text" name="videolink" placeholder="A link to a Video (optional)")  
+          input(type="text" name="videolink" placeholder="A link to a Video (optional)")
           input(type="submit" name="submit" value="Upload new Case" class="green_bg")
 
 

@@ -3,13 +3,15 @@ var User            = require('../models/user.js');
 var Project         = require('../models/project.js');
 var Challenge       = require('../models/challenge.js');
 var cookieSession   = require('cookie-session');
+var validator       = require('validator');
 var crypto          = require('crypto');
 var sendmail        = require('sendmail')();
+var email           = require('./email.js');
 
 
 //- GET Log In Page
 module.exports.render_login = function(req, res) {
-  res.render('auth/login',{ title: 'Login | Creativity Has No Borders', error:null, data: null})
+  res.render('auth/login',{ title: 'Login | Creativity Has No Borders', error:null, data: {user: req.user}})
 };
 
 //- POST Log In Page
@@ -17,20 +19,24 @@ module.exports.process_login = function(req, res) {
 
   //- Variables
   var raw_data = req.body;
+  raw_data.email = req.sanitize(req.body.email);
 
   //- User Data Validation
   if(raw_data.email.toLowerCase() != '' && (raw_data.password != null && raw_data.password != '')){
 
     //- Find user
-    User.findOne({$or: [{ username: raw_data.email },{ email: raw_data.email }], isActive: true, isBlocked:false}, function(err, user) {
+    User.findOne({$or: [{ username: raw_data.email },{ email: raw_data.email }], isActive: true}, function(err, user) {
       if(!user){
-        return res.render('auth/login',{ title: 'Login | Creativity Has No Borders', error:"Invalid Username, Email or Password", data: {email:raw_data.email}})
+        return res.render('auth/login',{ title: 'Login | Creativity Has No Borders', error:"Invalid Username, Email or Password", data: {user: req.user, email:raw_data.email}})
+      }
+      if(user.isBlocked){
+        return res.render('auth/login',{ title: 'Login | Creativity Has No Borders', error:"Your Account was blocked.", data: {user: req.user, email:raw_data.email}})
       }
 
       //- Test if Passwords Match
       user.comparePassword(raw_data.password, function(err, isMatch) {
         if(!isMatch){
-          return res.render('auth/login',{ title: 'Login | Creativity Has No Borders', error:"Invalid Username, Email or Password", data: {email:raw_data.email}})
+          return res.render('auth/login',{ title: 'Login | Creativity Has No Borders', error:"Invalid Username, Email or Password", data: {user: req.user, email:raw_data.email}})
         }
 
         //- Set new access token if needed
@@ -38,7 +44,6 @@ module.exports.process_login = function(req, res) {
           user.access_token = crypto.randomBytes(20).toString('hex');
           user.access_token_expires = Date.now() + 3600000*24*30; //- Valid for 30 Days
         }
-
 
         //- Save and Redirect
         user.save(function (err) {
@@ -63,7 +68,7 @@ module.exports.process_login = function(req, res) {
 
 //- GET Sign Up Page
 module.exports.render_register = function(req, res) {
-  res.render('auth/register',{ title: 'Register | Creativity Has No Borders', error:null, data: null})
+  res.render('auth/register',{ title: 'Register | Creativity Has No Borders', error:null, data: {user: req.user}})
 };
 
 //- POST Sign Up Page
@@ -73,15 +78,29 @@ module.exports.process_register = function(req, res) {
   var raw_data = req.body;
 
   //- User Data Validation
-  var user = {};
-  if (isAlphanumeric(raw_data.username)) user.username = raw_data.username.toLowerCase();
-  if (isAlphanumeric(raw_data.first_name)) user.first = raw_data.first_name.toLowerCase();
-  if (isAlphanumeric(raw_data.last_name)) user.last = raw_data.last_name.toLowerCase();
-  if (isAlphanumericExtended(raw_data.email)) user.email = raw_data.email.toLowerCase();
-  if (raw_data.password === raw_data.confirm_password && raw_data.password != '' && raw_data.password.length >= 8) user.password = raw_data.password;
+  if(raw_data.terms === 'on' &&
+     !validator.isEmpty(raw_data.username) &&
+     !validator.isEmpty(raw_data.first_name) &&
+     !validator.isEmpty(raw_data.last_name) &&
+     validator.isEmail(raw_data.email) &&
+     raw_data.password.length >= 8 && raw_data.password === raw_data.confirm_password
+    ){
+      var user = {};
+      user.username = req.sanitize(req.body.username).toLowerCase();
+      user.first = req.sanitize(req.body.first_name);
+      user.last = req.sanitize(req.body.last_name);
+      user.email = req.sanitize(req.body.email);
+      user.password = raw_data.password;
 
-  //- All fields where validated
-  if(Object.keys(user).length === Object.keys(raw_data).length-2){
+      user.address = req.sanitize(req.body.address);
+      user.age = req.sanitize(req.body.age);
+      if(req.sanitize(req.body.gender) != "Gender") user.gender = req.sanitize(req.body.gender);
+      user.profession = req.sanitize(req.body.profession);
+    }
+
+
+    //- All fields where validated
+    if(Object.keys(user).length >= 5){
 
     //- Check if user already exists
     User.find({ $or: [{username: user.username},{email:user.email}]}, function(err, users) {
@@ -102,7 +121,13 @@ module.exports.process_register = function(req, res) {
           email: user.email,
           password: user.password,
           access_token: access_token,
-          access_token_expires: access_token_expires
+          access_token_expires: access_token_expires,
+          meta: {
+            age: user.age,
+            gender: user.gender,
+            title: user.profession,
+            status: "career starter"
+          }
         });
 
         //- save user to database
@@ -118,7 +143,7 @@ module.exports.process_register = function(req, res) {
                 from: 'no-reply@creativityhasnoborders.com',
                 to: user.email,
                 subject: '[CHNB] Activate your Account',
-                html: 'Click here to activate your Account: '+config.host+'/auth/confirmation/'+access_token,
+                html: email.activate(config.host, access_token),
               }, function(err, reply) {});
           }
 
@@ -145,7 +170,7 @@ module.exports.process_register = function(req, res) {
 module.exports.process_confirmation = function(req, res) {
 
   //- Update Database entry - Activate User
-  User.update({access_token: req.params.token, access_token_expires: { $gt: Date.now() }},{ $set: { isActive: true }},{multi: false}, function(err, users) {
+  User.update({access_token: req.sanitize(req.params.token), access_token_expires: { $gt: Date.now() }},{ $set: { isActive: true }},{multi: false}, function(err, users) {
 
     //- If activation process was successfull -> redirect to the login page
     if(users.ok > 0){
@@ -163,7 +188,7 @@ module.exports.process_confirmation = function(req, res) {
 
 //- GET Password Reset
 module.exports.render_password_reset = function(req, res) {
-  res.render('auth/password_reset',{ title: 'Password Reset | Creativity Has No Borders', error:null, data: null})
+  res.render('auth/password_reset',{ title: 'Password Reset | Creativity Has No Borders', error:null, data: {user: req.user}})
 };
 
 //- POST Password Reset
@@ -171,48 +196,47 @@ module.exports.process_password_reset = function(req, res) {
   var raw_data = req.body;
 
   //- Validate e-mail adress
-  if(isAlphanumericExtended(raw_data.email) && raw_data.email.toLowerCase() != '' && raw_data.email.toLowerCase() != undefined && raw_data.email.toLowerCase() != null){
+  if(!validator.isEmail(raw_data.email) || !isAlphanumericExtended(raw_data.email) || raw_data.email.toLowerCase() === '' || raw_data.email.toLowerCase() === undefined || raw_data.email.toLowerCase() === null){
+    return res.render('auth/password_reset',{ title: 'Password Reset | Creativity Has No Borders', error:"The provided e-mail address is invalid. Please try again.", data: {user: req.user, email:req.body.email}})
+  }
 
-    //- Find user with specific e-mail
-    User.findOne({ email: raw_data.email }, function(err, user) {
-      if(!user){
-        return res.redirect("/auth/password-reset");
-      }
+  //- Find user with specific e-mail
+  User.findOne({ email: req.sanitize(raw_data.email) }, function(err, user) {
+    if(!user){
+      return res.render('auth/password_reset',{ title: 'Password Reset | Creativity Has No Borders', error:"The provided e-mail address does not exist. Please try again.", data: {user: req.user, email:req.body.email}})
+    }
 
-      //- Create and save Token to Database
-      user.reset_password_token = crypto.randomBytes(20).toString('hex');
-      user.reset_password_token_expires = Date.now() + 3600000; // 1 hour
-      user.save(function (err) {
-        if(err) {return res.redirect("/auth/password-reset");}
-      });
+    //- Create and save Token to Database
+    user.reset_password_token = crypto.randomBytes(20).toString('hex');
+    user.reset_password_token_expires = Date.now() + 3600000; // 1 hour
+    user.save(function (err) {
+      if(err) return res.render('auth/password_reset',{ title: 'Password Reset | Creativity Has No Borders', error:"Something went wrong. Please try again.", data: {user: req.user, email:req.body.email}})
 
       //- Send activation Email
       sendmail({
         from: 'no-reply@creativityhasnoborders.com',
         to: user.email,
         subject: '[CHNB] Reset your Password',
-        html: 'Click here to reset your Password: '+config.host+'/auth/password-reset/'+user.reset_password_token,
+        html: email.pw_reset(config.host, user.reset_password_token),
       }, function(err, reply) {});
 
       //- Render confirmation page
-      res.render('auth/confirm_reset',{ title: 'Password Reset | Creativity Has No Borders', data:{email:user.email}}) //- Redirect at Success
-
+      res.render('auth/confirm_reset',{ title: 'Password Reset | Creativity Has No Borders', data:{user: req.user, email:user.email}}) //- Redirect at Success
     });
 
-  } else {
-    res.render('auth/password_reset',{ title: 'Password Reset | Creativity Has No Borders', error:"The provided e-mail address is invalid. Please try again.", data: {email:req.body.email}})
-  }
+  });
+
 };
 
 //- GET Confirmed Password Reset
 module.exports.render_password_reset_new = function(req, res) {
 
   //- find user with the right token
-  User.findOne({ reset_password_token: req.params.token, reset_password_token_expires: { $gt: Date.now() } }, function(err, user) {
+  User.findOne({ reset_password_token: req.sanitize(req.params.token), reset_password_token_expires: { $gt: Date.now() } }, function(err, user) {
     if(!user) {
-      return res.redirect("/");
+      return res.redirect("/auth/password_reset");
     }
-    res.render('auth/password_reset_new',{ title: 'Password Reset | Creativity Has No Borders', error:null, data: null})
+    res.render('auth/password_reset_new',{ title: 'Password Reset | Creativity Has No Borders', error:null, data: {user: req.user}})
   });
 
 };
@@ -221,9 +245,9 @@ module.exports.render_password_reset_new = function(req, res) {
 module.exports.process_password_reset_new = function(req, res) {
 
   //- Find User with the provided Token
-  User.findOne({ reset_password_token: req.params.token, reset_password_token_expires: { $gt: Date.now() } }, function(err, user) {
+  User.findOne({ reset_password_token: req.sanitize(req.params.token), reset_password_token_expires: { $gt: Date.now() } }, function(err, user) {
     if(!user){
-      return res.render('auth/password_reset_new',{ title: 'Password Reset | Creativity Has No Borders', error:"Invalid Link or something else has happened", data: null})
+      return res.redirect(req.originalUrl);
     }
 
     //- Save new (valid) password to database
@@ -235,7 +259,7 @@ module.exports.process_password_reset_new = function(req, res) {
         res.redirect("/auth/login")
       });
     } else {
-      res.render('auth/password_reset_new',{ title: 'Password Reset | Creativity Has No Borders', error:"The passwords have to be equal.", data: null})
+      res.redirect(req.originalUrl)
     }
 
   });

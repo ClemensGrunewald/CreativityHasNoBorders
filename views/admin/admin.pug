@@ -1,44 +1,43 @@
-doctype html
-html
-  head
-    //- Metadata
-    meta(charset='utf-8')
-    meta(name='author' content='Papel & Caneta')
-    meta(name='description' content='Creativity has no borders gives refugees and agencies a chance to find each other.')
-    meta(name='keywords' content='creativity, refugees, no borders, papel, caneta')
-    meta(name='copyright' content='creativityhasnoborders.com')
-    meta(name='robots' content='index, follow')
-    meta(name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1')
-
-    //- Title
-    title= title
-
-    //- Stylesheets
-    link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Josefin+Sans:700|Roboto+Condensed:400,700')
-    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css')
-    link(rel='stylesheet', href='/styles/admin.css')
-
-    //- Pre-Scripts
-    script(src='/js/jquery-3.2.1.slim.min.js')
-    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js')
-    script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js')
-    script(src='https://use.fontawesome.com/289ece6f72.js')
-
-  body
-
-    //- Navbar
-    nav(role="navigation" class="navbar navbar-light fixed-top")
-      a(href="/admin")
-        h1= "Admin Dashboard"
-      a(href="/")
-        div.menu-text Go Back
+extends ../layout.pug
 
 
+//- Stylesheets exclusive for this subpage
+block styles
+  link(rel='stylesheet', href='/styles/helpers.css')
+  link(rel='stylesheet', href='/styles/admin.css')
 
-    //- Content
-    block content
+//- Stylesheets exclusive for this subpage
+block scripts
 
+//- Main content to extend the Layout template
+block content
 
+  div.main_wrapper
+    div.content_wrapper
 
-    //- Scripts
-    script.
+      h4 Welcome back #{data.user.username} :),
+      p This is the Moderation Area. As a Moderator you can create new challenges and manage your community.
+      if(data.user.isAdmin || data.user.isAgencyUser)
+        a(href="/admin/new")
+          div.button(class="pink_bg") New Challenge
+
+      if(data.challenges && data.challenges.length > 0)
+        h3 Challenges:
+        ul#challenges
+          each c in data.challenges
+            a(href="/admin/"+c.name+"/edit")
+              li #{c.title.toLowerCase()}
+
+      if(data.projects && data.projects.length > 0)
+        h3 Reported Projects:
+        ul#reported_projects
+          each p in data.projects
+            a(href="/u/"+p.username+"/"+p.name)
+              li #{p.title}
+
+      if(data.users && data.users.length > 0)
+        h3 Reported Users:
+        ul#reported_users
+          each u in data.users
+            a(href="/u/"+u.username+"/")
+              li #{u.username}

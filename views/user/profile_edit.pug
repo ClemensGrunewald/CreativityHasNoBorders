@@ -17,8 +17,8 @@ block content
     div#header_module
       svg(class="diagonal_shape" viewBox="0 0 100 10" preserveAspectRatio="none")
         path(d="M 0,0 L 100,0 100,4 0,10 z" style="fill: white;")
-      img(id="avatar" class="avatar" src=data.profile.meta.profile_img alt="avatar")
-      input(type="file" name="profile_img" accept="image/*" value="" onchange="loadFile(event)")
+      div(id="avatar" class="avatar" style="background-image:url('"+data.profile.meta.profile_img+"');")
+      input(type="file" name="profile_img" accept="image/jpeg,image/png" value="" onchange="loadFile(event)")
 
     //- PROFILE MODULE
     div#profile_module(class="main_wrapper")
@@ -72,5 +72,5 @@ block content
     //Function to preview profile image
     var loadFile = function(event) {
       var output = document.getElementById('avatar');
-      output.src = URL.createObjectURL(event.target.files[0]);
+      $('#avatar').css("backgroundImage", 'url(' + URL.createObjectURL(event.target.files[0]) + ')');
     };

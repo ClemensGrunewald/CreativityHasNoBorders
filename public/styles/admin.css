@@ -1,585 +1,106 @@
 /*- Admin Dashboard Style -*/
-/*
 
 
-
-font-family: 'Josefin Sans', sans-serif; // headlines
-font-family: 'Roboto Condensed', sans-serif; // bold subhead, regular copy
-
-*/
 ::-webkit-scrollbar {
     display: none;
 }
 
+/* Admin Dashboard */
 
-* {
-  margin:0;
-  padding:0;
+.button {
+  margin-top:30px;margin-bottom:30px;
 }
 
-body {
+#reported_projects, #challenges, #reported_users {
   position:relative;
-  padding-top:57px;
-
-  background: white;
-  font-family: 'Roboto Condensed', sans-serif;
-  font-weight:normal;
-  color:black;
+  list-style: none;
+  margin-bottom:30px;
+}
+#reported_projects li, #challenges li {
+  list-style: none;
+  padding: 0 5px;
+  margin-left:5px;
+  margin-bottom:5px;
+  border-left:3px solid rgb(255,76,50);
+  color: rgba(0,84,104,1);
 }
 
-h1 {
+#reported_projects li:nth-child(2n+0){
+  border-left:3px solid rgba(158,240,225,1);
+}
+
+#reported_projects li:nth-child(3n+0){
+  border-left:3px solid rgba(159,200,28,1);
+}
+
+#challenges li {
+  border-left:3px solid rgb(159,200,28);
+}
+
+
+/* Challenge New */
+h4 {
+  margin-top:20px;
+}
+
+form input, form select{
+  position:relative;
+  width:100%;
+  height:6vh;
+  padding:5px 10px;
+  background:rgba(0,84,104,1);
+  border:0;
+  border-radius: 0;
+  margin:5px 0;
+  color:white;
+  font-size:4vmin;
+  -webkit-appearance:none;
+  -moz-appearance:none;
+  appearance:none;
+}
+
+.checkbox_label {
+  display:inline-block;
+  line-height: 6vh;
   font-family: 'Josefin Sans', sans-serif;
   font-weight:bold;
   color: rgba(0,84,104,1);
+  font-size:4vmin;
+  text-transform: uppercase;
 }
 
-p {
-  font-size: 18px;
-  color: rgba(0,84,104,1);
-  letter-spacing:1.2px;
-  line-height:26px;
-}
-
-a, a:hover {
-  text-decoration: none;
-  color:black;
-}
-
-
-/*- Navigationbar  -*/
-.navbar {
-  padding:0 15px;
-  margin:0;
-}
-
-nav {
-  height:60px;
-  background:rgba(30,30,30,1);
-  border-bottom:1px solid rgba(0,0,0,0.05);
-}
-
-nav .menu-text {
-  position:absolute;
-  top:0;
-  right:15px;
-  color:white;
-  font-weight:200;
-  font-size:14px;
-  line-height:60px;
-}
-
-nav h1 {
-  color: white;
-  line-height: 60px;
-  font-size:20px;
-}
-
-
-/* Sidebar */
-#sidebar {
-  display:block;
-  position:fixed;
-  width:100%;
-  height:60px;
-  background:rgba(60,60,60,1);
-  text-align: center;
-  z-index:10;
-}
-
-#sidebar ul {
-  position:relative;
-  white-space: nowrap;
-  padding:0;
-  overflow:auto;
-}
-
-#sidebar a li {
-  display:inline;
-  position:relative;
-  padding:10px 15px;
-  box-sizing: border-box;
-  margin:0 5px;
-  list-style: none;
-  color:white;
-  font-size:2.3vh;
-  font-weight:normal;
-  line-height:60px;
-  background:rgba(70,70,70,0.8);
-
-}
-
-#sidebar .active {
-  background:rgba(100,100,100,1);
-  cursor:pointer;
-}
-
-#sidebar .span {
-  display:inline;
-  position:relative;
-  transform: rotate(30deg);
-  font-size:2vh;
-  color:white;
-}
-
-
-/*- CONTENT  -*/
-.content-wrapper {
-  position:relative;
-  padding:10px;
-  margin-top:60px;
-}
-
-.error_alert {
-  position:relative;
-  width:calc(100% - 40px);
-  margin-left:20px;
-  min-height:2vh;
-  padding:5px 15px;
-  box-sizing: border-box;
-  border-radius: 2.5px;
-  background:rgba(255,0,0,0.8);
-  color:white;
-}
-
-.error_alert i {
-  display:inline-block;
-  width:10%;
-  line-height:2vh;
-  vertical-align:middle;
-}
-
-.error_alert .err {
-  display: inline-block;
-  width:90%;
-  font-size:1.8vh;
-  line-height:2vh;
-}
-
-
-
-
-
-
-/*- USER TAB -*/
-#usertable {
-  position:relative;
-  width:100%;
-}
-
-#usertable a {
-  color:white;
-}
-
-#usertable li {
+input[type="checkbox"] {
   display:inline-block;
   position:relative;
-  width:100%;
-  height:80px;
-  padding:10px;
-  background:lightgrey;
-  margin-bottom:10px;
-}
-
-#usertable .active {
-  background:#2ecc71;
-}
-
-#usertable .inactive{
-  background:grey;
-}
-
-#usertable .blocked{
-  background:#e74c3c;
-}
-
-#usertable .left, #usertable .right {
-  display:inline-block;
-  vertical-align: top;
-}
-
-#usertable .left .username {
-  color:white;
-  font-size: 2.5vh;
-  font-weight:bold;
-}
-
-#usertable .left .name {
-  color:white;
-  font-size: 1.6vh;
-  text-transform: capitalize;
-}
-
-#usertable .left .email {
-  color:white;
-  font-size: 1.6vh;
-}
-
-#usertable .right {
-  position:absolute;
-  font-size:0;
-  right:0;
-  text-align: center;
-}
-
-#usertable .right > a div{
-  display: inline-block;
-  vertical-align: top;
-  position:relative;
-  margin-top:-10px;
-  margin:-10px 0 0 0;
-  padding:0;
-  height:80px;
-  width:18vw;
-  color:white;
-  font-size:2vh;
-  font-weight:bold;
-  line-height:80px;
-}
-
-.right .edit {
-  background:#2980b9;
-}
-
-.right .block {
-  background:#e74c3c;
-}
-
-.right .unblock {
-  background:#27ae60;
-}
-
-/* EDIT USER */
-.content-wrapper .profile_img {
-  display:block;
-  position:relative;
-  width:20vh;
-  height:20vh;
-  margin:20px auto;
-  background:lightgrey;
-  border-radius:100%;
-  border:1px solid rgb(100,100,100);
-}
-
-.content-wrapper form {
-  width:90%;
-  margin:0 auto;
-}
-
-.content-wrapper form h1 {
-  display:block;
-  position:relative;
-  margin-top:10px;
-  font-size:3vh;
-  font-weight:bold;
-  color:rgb(60,60,60);
-}
-
-.content-wrapper input {
-  position:relative;
-  color:rgb(60,60,60);
-  width:70%;
+  width:6vh;
+  height:6vh;
+  background:rgba(158,240,225,1);
   border:0;
-  font-size:2vh;
-}
-
-.content-wrapper textarea {
-  position:relative;
-  color:rgb(60,60,60);
-  width:100%;
-  border:0;
-  font-size:2vh;
-  resize:none;
-}
-
-.content-wrapper input[name="username"]{
-  display:block;
-  position: relative;
-  margin:0 auto;
-  text-align: center;
-  font-size:3.5vh;
-  font-weight: bold;
-}
-
-.content-wrapper input[name="email"]{
-  display:block;
-  position: relative;
-  margin:0px auto 20px auto;
-  text-align: center;
-}
-
-
-.content-wrapper label {
-  position: relative;
-  width:100%;
-  font-size:2vh;
-  color:grey;
-}
-
-label[for="description"] {
-  vertical-align: top;
-}
-
-.content-wrapper input[name="submit"]{
-  display:block;
-  position: relative;
-  width:60vw;
-  height:40px;
-  margin:20px auto;
-  background:rgb(60,60,60);
+  border-radius: 0;
+  margin:10px 10px 15px 0;
   color:white;
-  text-align: center;
+  font-size:4vmin;
+  vertical-align: middle;
 }
 
-input:focus,select:focus,textarea:focus,button:focus {
-  outline:none;
-  outline-width: 0;
-}
-
-input:hover {
-  cursor:pointer;
+input[type="checkbox"]:checked {
+    background: rgba(255,76,50,1);
 }
 
 
-
-
-
-/* CHALLENGES TAB */
-#challengelist {
-  position:relative;
-  width:100%;
+input[type="checkbox"]:checked:after {
+    content: "\2713";
+    color: #fff;
+    font-size:20px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%,-50%);
+    -moz-transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
 }
 
-#challengelist li {
-  display:inline-block;
-  position:relative;
-  width:100%;
-  margin: 10px auto;
-  border-radius:2.5px;
-  box-shadow: 0 0px 5px -0px rgba(0,0,0,0.5);
-}
-
-#challengelist .new {
-  position:relative;
-  width:100%;
-  min-height:120px;
-  background:lightgrey;
-  text-align: center;
-  font-size:10vh;
-  color:rgba(0,0,0,0.1);
-  line-height: 120px;
-  box-shadow: none;
-}
-
-#challengelist .new:hover {
-  color:rgba(0,0,0,0.3);
-}
-
-
-#challengelist li .cover {
-  position:relative;
-  width:100%;
-  height:auto;
-  max-height: 150px;
-  overflow: hidden;
-}
-
-#challengelist li .cover img {
-  width:100%;
-  height:auto;
-  border-radius: 2.5px 2.5px 0 0;
-}
-
-#challengelist li .content {
-  position:relative;
-  width:100%;
-  box-shadow: 0 -10px 20px -10px rgba(0,0,0,0.5);
-  background:white;
-  padding:10px;
-  box-sizing: border-box;
-  border-radius:0 0 2.5px 2.5px;
-}
-
-
-#challengelist li .content h1 {
-  position:relative;
-  font-size:3vh;
-  font-weight:bold;
-  line-height:3.5vh;
-  margin-bottom:-5px;
-}
-
-#challengelist li .content span {
-  position:relative;
-  font-size:2vh;
-  line-height:16px;
-}
-
-#challengelist li .content .author {
-  font-weight:bold;
-  color:#2c3e50;
-}
-
-#challengelist li .content .meta {
-  position:absolute;
-  top:-30px;
-  right:5px;
-  font-size:1.5vh;
-}
-
-#challengelist li .content .meta > div {
-  display:inline-block;
-  position:relative;
-  padding:5px 10px;
-  box-sizing: border-box;
-  background: #2ecc71;
-  color: white;
-  border-radius:5px;
-}
-
-#challengelist li .content .meta i {
-  font-size:2vh;
-  margin-right:5px;
-}
-
-#challengelist li .content .meta .active_until {
-  background:#e74c3c;
-}
-#challengelist li .content .meta .inactive {
-  background:#e74c3c;
-}
-
-
-/* NEW CHALLENGE */
-#new_challenge {
-  width:100%;
-}
-
-#new_challenge i {
-  font-size:25px;
-  margin-right:10px;
-}
-
-#new_challenge .uploadContainer {
-    overflow: hidden;
-    position:relative;
-    width:100%;
-    height:100px;
-    margin:20px 0;
-    background: white;
-    border:1px solid grey;
-    border-radius: 2.5px;
-    text-align: center;
-    font-size:2vh;
-    line-height:120px;
-    background:lightgrey;
-}
-
-#new_challenge .uploadContainer img {
-  position:absolute;
-  top:0;
-  left:0;
-  right:0;
-  bottom:0;
-  width:100%;
-  height:auto;
-  z-index:0;
-  opacity:0.9;
-}
-
-#new_challenge .uploadContainer .caption {
-  position:absolute;
-  top:0;
-  left:0;
-  right:0;
-  bottom:0;
-  width:100%;
-  height:auto;
-  z-index:1;
-  color:white;
-  text-shadow: 1px 1px 0 grey;
-}
-
-
-#new_challenge .uploadContainer [type=file] {
-    cursor: inherit;
-    display: block;
-    position:absolute;
-    top: 0;
-    right: 0;
-    min-width: 100%;
-    opacity: 0;
-    filter: alpha(opacity=0);
-    text-align: right;
-    cursor: pointer;
-}
-
-#new_challenge input[name="title"]{
-  display:block;
-  width:100%;
-  position: relative;
-  margin:0 auto;
-  text-align: center;
-  font-size:3.5vh;
-  font-weight: bold;
-}
-
-#new_challenge input[name="author"] {
-  display:block;
-  position: relative;
-  margin:0 auto 30px auto;
-  text-align: center;
-}
-
-#new_challenge label[for="countdown"] {
-  display:none;
-}
-
-#new_challenge label > input[type="checkbox"]:checked ~ label[for="countdown"] {
-  display: block;
-  margin-top:10px;
-  margin-bottom:-2px;
-}
-
-
-
-
-
-
-
-/*- HELPERFUNCTIONS -*/
-.centered {
-  text-align: center;
-}
-
-.main_button_white {
-  position:relative;
-  display:inline-block;
-  min-width:250px;
-  border:2px solid white;
-  color: white;
-  margin-top:10px;
-  margin-bottom:10px;
-  padding:15px 45px;
-}
-
-.main_button_white:hover {
-  color:black;
-  background:white;
-}
-
-
-.main_button_black {
-  position:relative;
-  display:inline-block;
-  min-width:250px;
-  border:2px solid black;
-  color: black;
-  margin-top:10px;
-  margin-bottom:10px;
-  padding:15px 45px;
-}
-
-.main_button_black:hover {
-  color:white;
-  background:black;
+textarea {
+  margin-top:-2.5px;
 }

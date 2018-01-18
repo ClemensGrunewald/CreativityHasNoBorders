@@ -20,11 +20,33 @@ block scripts
 //- Main content to extend the Layout template
 block content
 
+  //- MOD TOOLBAR
+  if((data.user.isAdmin || data.user.isMod) )
+    div#mod-toolbar(data-name=data.profile.username)
+      a(href="/admin")
+        span Moderation Toolbar
+      div.mod-controls
+        a(href="/u/"+data.profile.username+"/edit")
+          div.mod-edit(class="controls")
+            span edit
+        a(href="/u/"+data.profile.username+"/block")
+          div.mod-block(class="controls")
+            if(data.profile.isBlocked)
+              span.unblock unblock
+            else
+              span.block block
+        a(href="/u/"+data.profile.username+"/delete")
+          div.mod-del(class="controls")
+            span delete
+
+
   //- HEADER MODULE
   div#header_module
     svg(class="diagonal_shape" viewBox="0 0 100 10" preserveAspectRatio="none")
       path(d="M 0,0 L 100,0 100,4 0,10 z" style="fill: white;")
-    img(class="avatar" src=data.profile.meta.profile_img alt="avatar")
+    div(class="avatar" style="background-image:url('"+data.profile.meta.profile_img+"');")
+    if(data.profile.isBlocked)
+      div.blocked blocked
 
   //- PROFILE MODULE
   div#profile_module(class="main_wrapper")
@@ -48,12 +70,14 @@ block content
     if(data.user.username === data.profile.username)
       a(href="/u/"+data.user.username+"/new")
         div.button(class="pink_bg") UPLOAD NEW CASE
-    else
-      a(href="#")
+    else if(data.user.isAuthenticated)
+      a(href="mailto:contact@chnb.de?subject=Contact%20%2F%2F%20"+data.user.username+"%20wants%20to%20know%20more%20about%20"+data.profile.username+"&body=Hallo%20liebes%20CreativityhasnoBorders-Team,%0D%0A%0D%0Aich%20würde%20gern%20mehr%20über%20%22"+data.profile.username+"%22%20erfahren.")
         div.button(class="pink_bg") Contact #{data.profile.username}
-
+    else
+      a(href="/login")
+        div.button(class="pink_bg") Login to interact
 
   div#project_list(class="list")
     ul.list_wrapper
       each project in data.projects
-        +project("/u/"+project.username+"/"+project.name, project.media[0].path, project.title, project.description.substr(0,35)+" ...")
+        +project("/u/"+project.username+"/"+project.name, project.thumbnail, project.title, project.description.substr(0,35)+(project.description.length>35 ? "...": ""))

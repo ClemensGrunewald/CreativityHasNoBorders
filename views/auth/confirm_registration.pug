@@ -15,10 +15,11 @@ block content
   div#header_module
     svg(class="diagonal_shape" viewBox="0 0 100 10" preserveAspectRatio="none")
       path(d="M 0,0 L 100,0 100,4 0,10 z" style="fill: white;")
-    img(class="avatar" src="/images/avatars/avatar1.png" alt="avatar")
+    - var rnd = Math.floor((Math.random()*7)+1)
+    div(class="avatar" style="background-image:url('/images/avatars/avatar"+rnd+".png')")
 
 
   //- LOGIN BODY
   div#register_module(class="green_gradient")
     h1 Registration almost completed.
-    p We sent you an email to confirm your registration. Please click the provided link in the E-Mail to complete your registration. 
+    p We sent you an email to confirm your registration. Please click the provided link in the E-Mail to complete your registration.

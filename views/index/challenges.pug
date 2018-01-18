@@ -2,26 +2,48 @@ extends ../layout.pug
 include ../modules/mixins_index.pug
 
 
-mixin current_challenge(name, title, active_until, desc, short_mode, brief)
+mixin current_challenge(user, name, title, active_until, desc, short_mode, brief, participants)
   div.content_wrapper
     h4(class="red_text") Current challenge
-    h2.title #{title}
+    a(href="/challenges/"+name)
+      h2.title #{title}
     p.timeframe ACTIVE UNTIL: #{prettyDate(active_until)}
     p #{desc}
 
     if(short_mode.enabled)
-      p Warning! Timer starts running once you progress.
-      p Countdown:
-      h2.countdown(class="red_text") #{toCountdown(short_mode.countdown)}
-    a(href=brief target="_blank")
-      div.button(class="blue_bg") Download current Brief
-    a(href="/u/"+data.user.username+"/new?challenge="+name)
-      div.button(class="red_bg") Upload your solution
+      p(style="font-weight:bold;") Warning! Timer starts running once you progress.
 
-mixin past_challenge(title, active_until, desc, short_mode)
+      - var found = false
+      - var countdown;
+      each p in participants
+        if(p.username === user.username)
+          - found=true
+          - countdown = Math.abs(new Date() - new Date(p.endtime))/1000/60
+          if(new Date() > new Date(p.endtime))
+            - countdown = 0;
+
+      if(found)
+        p Countdown:
+        h2.countdown(class="red_text active_cd" data-time=countdown data-started="true") #{toCountdown(countdown).substring(0,11)}
+      else
+        p Countdown:
+        h2.countdown(class="red_text" data-time=short_mode.countdown data-started="false") #{toCountdown(short_mode.countdown)}
+
+    if(data.user.isAuthenticated)
+      a(href="/challenges/"+name+"/download" target="_blank")
+        div.button(class="blue_bg download_brief") Download current Brief
+      a(href="/u/"+data.user.username+"/new?challenge="+name)
+        div.button(class="red_bg") Upload your solution
+    else
+      a(href="/register")
+        div.button(class="blue_bg") Sign up, Start now
+
+
+mixin past_challenge(name, title, active_until, desc, short_mode, brief, winner)
   div.content_wrapper
     h4(class="red_text") Past challenge
-    h2.title #{title}
+    a(href="/challenges/"+name)
+      h2.title #{title}
     p.timeframe ACTIVE UNTIL: #{prettyDate(active_until)}
     p #{desc}
 
@@ -29,28 +51,24 @@ mixin past_challenge(title, active_until, desc, short_mode)
       p This Challenge was time restricted.
       h2.countdown(class="red_text") #{toCountdown(short_mode.countdown)}
 
-  div.button_icon(class="green_bg blue_text") Winners
+    if(data.user.isAuthenticated)
+      a(href="/challenges/"+name+"/download" target="_blank")
+        div.button(class="blue_bg") Download Old Brief
 
-  div#portfolio_list(class="list")
-    ul.list_wrapper
-      a(href="#")
-        li
-          div.image(style="background-image:url('images/index.png')")
-          div.content
-            h4 SUSI SUNSHINE
-            p > View Portfolio
-      a(href="#")
-        li
-          div.image(style="background-image:url('images/index.png')")
-          div.content
-            h4 PENNY PENNROSE
-            p > View Portfolio
-      a(href="#")
-        li
-          div.image(style="background-image:url('images/index.png')")
-          div.content
-            h4 SIR_CLEE
-            p > View Portfolio
+
+
+  if(winner && winner.length > 0)
+    div.button_icon(class="green_bg blue_text" style="margin-top:-30px;") Winners
+
+    div#portfolio_list(class="list")
+      ul.list_wrapper
+        each w in winner
+          a(href="/u/"+w.username+"/"+w.name)
+            li
+              div.image(style="background-image:url('"+w.thumbnail+"')")
+              div.content
+                h4 #{w.title}
+                p > View Project
 
 
 
@@ -76,17 +94,19 @@ block content
       h1(class="blue_text")= data.modules[0].title.substring(data.modules[0].title.indexOf(" ")+1, data.modules[0].title.length)
       span.pink_subline
 
-    each challenge in data.current_challenges
-      +current_challenge(challenge.name, challenge.title, challenge.active_until, challenge.description, challenge.shortMode, challenge.brief )
+    if(data.current_challenges)
+      each challenge in data.current_challenges
+        +current_challenge(data.user, challenge.name, challenge.title, challenge.active_until, challenge.description, challenge.shortMode, challenge.brief, challenge.participants )
 
 
 
   //- DECORATIONAL ELEMENT
-  div(style="position:relative; width:100%; height:200px; background:black;")
+  div.divider
 
   //- PREVIOUS CHALLENGES
   div#past_challenges(class="main_wrapper")
-    +past_challenge(data.past_challenge.title, data.past_challenge.active_until, data.past_challenge.description, data.past_challenge.shortMode )
+    if(data.past_challenge)
+      +past_challenge(data.past_challenge.name, data.past_challenge.title, data.past_challenge.active_until, data.past_challenge.description, data.past_challenge.shortMode, data.past_challenge.brief, data.past_challenge.winner )
 
 
   //- HAND IN YOUR CHALLENGE
@@ -96,13 +116,61 @@ block content
     div.inner_wrapper
       h1 Send us your Brief
       p We are always open to fresh ideas. Even if it comes to ideas for ideas. If you have a challenge that is worth being challenged, just write us an email.
-      a(href="mailto:partner@creativityhasnoborders.com")
-        div.button(class="blue_bg") PARTNER@CHNB.COM
+      a(href="mailto:partners@chnb.de")
+        div.button(class="blue_bg") PARTNERS@CHNB.DE
 
 
 
 
 
+
+  script.
+    $(document).ready(function(){
+
+      //if user already participates in the challenge
+      $('.active_cd').each(function(i, val){
+        var ele = $(this);
+        if(ele.attr("data-started") === "true"){
+          var countdown = ele.attr("data-time");
+          var interval = setInterval(function(){
+            countdown = countdown - (1/60);
+            ele.html(toCountdown(countdown).substr(0,11));
+
+            if(countdown <= 0){
+              ele.html("00:00:00:00");
+              clearInterval(interval);
+            }
+          },1000);
+        }
+      })
+
+      //Starts the Countdown-Timer on click on brief
+      $('.download_brief').on('click', function(){
+        var ele = $(this).parent().prev('.countdown');
+        if(ele){
+          var countdown = ele.attr("data-time");
+          var interval = setInterval(function(){
+            countdown = countdown - (1/60);
+            ele.html(toCountdown(countdown).substr(0,11));
+
+            if(countdown <= 0){
+              ele.html("00:00:00:00");
+              clearInterval(interval);
+            }
+          },1000);
+        }
+      })
+
+      function toCountdown(s) {
+        s = s*60;
+        var fm = [Math.floor(s / 60 / 60 / 24),Math.floor(s / 60 / 60) % 24, Math.floor(s / 60) % 60, s % 60];
+        fm.forEach(function(part, index){
+          if(fm[index]<10) fm[index] = fm[index].toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
+        })
+        return fm.join(':');
+      }
+
+    });
 
 
 
